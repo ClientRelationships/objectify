@@ -1,0 +1,22 @@
+{
+  "name": "objectify",
+  "version": "1.0.0",
+  "description": "Serialise and deserialise JavaScript objects in TypeScript.",
+  "main": "index.js",
+  "directories": {},
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jadaradix/objectify.git"
+  },
+  "author": "James Garner <j@jada.io> (http://jada.io/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jadaradix/objectify/issues"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}
