@@ -2,9 +2,10 @@
   "name": "objectify",
   "version": "1.0.0",
   "description": "Serialise and deserialise JavaScript objects in TypeScript.",
-  "main": "index.js",
-  "directories": {},
+  "main": "dist/index.js",
   "scripts": {
+    "build": "rm -rf dist && ./node_modules/typescript/bin/tsc",
+    "watch": "rm -rf dist && ./node_modules/typescript/bin/tsc --watch"
   },
   "repository": {
     "type": "git",
@@ -15,8 +16,9 @@
   "bugs": {
     "url": "https://github.com/jadaradix/objectify/issues"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
+    "mocha": "^3.1.0",
+    "typescript": "^2.0.3"
   }
 }
