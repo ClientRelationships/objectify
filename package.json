@@ -4,8 +4,9 @@
   "description": "Serialise and deserialise JavaScript objects in TypeScript.",
   "main": "dist/index.js",
   "scripts": {
-    "build": "rm -rf dist && ./node_modules/typescript/bin/tsc",
-    "watch": "rm -rf dist && ./node_modules/typescript/bin/tsc --watch"
+    "test": "./node_modules/.bin/mocha test --reporter spec",
+    "build": "rm -rf dist && ./node_modules/.bin/tsc",
+    "watch": "rm -rf dist && ./node_modules/.bin/tsc --watch"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,8 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "typescript": "^2.0.3",
     "mocha": "^3.1.0",
-    "typescript": "^2.0.3"
+    "chai": "^3.5.0"
   }
 }
