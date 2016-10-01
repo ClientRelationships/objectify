@@ -1,0 +1,1 @@
+"use strict";var Dog=function(){function e(e,t){this.name=e,this.age=t}return e.prototype.describe=function(){return"Woof! I am "+this.age+" years old"},e}(),DogSerialiser=function(){function e(){this.name="Dog"}return e.prototype.toRaw=function(e){return{name:e.name,age:e.age}},e.prototype.fromRaw=function(e){return new Dog(e.name,e.age)},e}();module.exports=DogSerialiser;
