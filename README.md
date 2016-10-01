@@ -1,22 +1,32 @@
 # objectify
 
-Serialise and deserialise JavaScript objects in TypeScript.
+Serialise and deserialise JavaScript objects.
 
 This is an example of my "best practice" JavaScript in 2016 using TypeScript/UglifyJS to build, mocha/chai to test and npm scripts.
 
 ## Install
-    npm install jadaradix/objectify --save
+```
+npm install jadaradix/objectify --save
+```
 
 ## Use
 
-`package.json` defines the entry point via `main` as `dist/index.js` so you can use this module natively via a CommonJS loader:
+`package.json` defines the entry point (`main`) as `dist/index.js` so you can load this module natively through CommonJS:
 
-    const objectify = require("objectify");
+```js
+const objectify = require("objectify");
+```
+
+`test/index.js` demonstrates this module.
 
 ## Build
-    npm run build
+```
+npm run build
+```
 
 This will output minified ES5 to the `dist` directory.
 
 ## Test
-    npm test
+```
+npm test
+```
