@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "mocha test --reporter spec",
-    "build": "rm -rf dist && perl -pi -e 's/\r\n|\n|\r/\n/g' ./node_modules/uglifyjs-folder/cli.js && tsc && uglifyjs-folder dist -e -x .js -o dist",
+    "build": "rm -rf dist && perl -pi -e 's/\r\n|\n|\r/\n/g' $(find ../.. -name \"cli.js\" | grep \"node_modules/uglifyjs-folder\") && tsc && uglifyjs-folder dist -e -x .js -o dist",
+    "postinstall": "npm run build",
     "watch": "rm -rf dist && tsc --watch"
   },
   "repository": {
