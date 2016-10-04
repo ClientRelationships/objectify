@@ -27,4 +27,9 @@ return describe("Objectify", function () {
     return done();
   });
 
+  it("makes an object", function (done) {
+    let newObject = Objectify.factory(type).make(rawObject.name, rawObject.age);
+    return done(typeof newObject === type);
+  });
+
 });
