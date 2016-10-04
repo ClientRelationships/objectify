@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha test --reporter spec",
-    "build": "rm -rf dist && ./node_modules/.bin/tsc && ./node_modules/.bin/uglifyjs-folder dist -eo dist",
+    "build": "rm -rf dist && ./node_modules/.bin/tsc && ./node_modules/.bin/uglifyjs-folder dist -e -x .js -o dist",
     "watch": "rm -rf dist && ./node_modules/.bin/tsc --watch"
   },
   "repository": {
