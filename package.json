@@ -6,6 +6,7 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha test --reporter spec",
     "build": "rm -rf dist && ./node_modules/.bin/tsc && ./node_modules/.bin/uglifyjs-folder dist -e -x .js -o dist",
+    "postinstall": "npm run build",
     "watch": "rm -rf dist && ./node_modules/.bin/tsc --watch"
   },
   "repository": {
