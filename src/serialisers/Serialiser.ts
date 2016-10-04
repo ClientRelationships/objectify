@@ -1,7 +1,7 @@
 interface Serialiser {
   name: string;
-  toRaw (object: Object): Object;
-  fromRaw (object: Object): Object;
+  toRaw (object: Object): any;
+  fromRaw (any: Object): Object;
 }
 
 export = Serialiser;
