@@ -1,9 +1,9 @@
 "use strict";
 
-const Objectify = require("../../dist");
+const objectify = require("../../dist");
 
-let creeperAction = Objectify.factory("CreeperAction").make("Reply");
+let creeperAction = objectify.factory("CreeperAction").make("Reply");
 console.log(creeperAction);
 
-let creeperActionRaw = Objectify.toRaw("CreeperAction", creeperAction);
+let creeperActionRaw = objectify.toRaw("CreeperAction", creeperAction);
 console.log(creeperActionRaw);

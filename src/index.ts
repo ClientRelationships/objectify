@@ -17,6 +17,7 @@ import CreeperFactory = require("./factories/Creeper");
 import CreeperTypeFactory = require("./factories/CreeperType");
 import CreeperActionFactory = require("./factories/CreeperAction");
 import CreeperActionTypeFactory = require("./factories/CreeperActionType");
+import CreeperFrequenciesFactory = require("./factories/CreeperFrequencies");
 
 module Objectify {
 
@@ -33,7 +34,8 @@ module Objectify {
     new CreeperFactory(),
     new CreeperTypeFactory(),
     new CreeperActionFactory(),
-    new CreeperActionTypeFactory()
+    new CreeperActionTypeFactory(),
+    new CreeperFrequenciesFactory()
   ];
 
   function getThingByName (array: Array<any>, name: string): any {

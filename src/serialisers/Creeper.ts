@@ -6,6 +6,7 @@ import CreeperType = require("../classes/CreeperType");
 import CreeperAction = require("../classes/CreeperAction");
 import CreeperActionType = require("../classes/CreeperActionType");
 import CreeperKeywords = require("../classes/CreeperKeywords");
+import CreeperFrequency = require("../classes/CreeperFrequency");
 
 class CreeperSerialiser implements Serialiser {
 
@@ -18,6 +19,7 @@ class CreeperSerialiser implements Serialiser {
     o["type"] = this.creeperTypeSerialiser.toRaw(creeper.type);
     o["keywords"] = creeper.keywords.join(", ");
     o["isEnabled"] = creeper.isEnabled;
+    o["actionFrequency"] = creeper.frequency.value;
     return o;
   }
 
@@ -35,13 +37,15 @@ class CreeperSerialiser implements Serialiser {
     }
     let keywords: CreeperKeywords = new CreeperKeywords();
     keywords.fromString(object.keywords);
+    let frequency: CreeperFrequency = new CreeperFrequency(object.actionFrequency);
     return new Creeper(
       object.creeperId,
       object.name,
       type,
       keywords,
       actions,
-      object.isEnabled
+      object.isEnabled,
+      frequency
     );
   }
 

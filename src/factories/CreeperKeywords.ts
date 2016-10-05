@@ -3,7 +3,7 @@ import CreeperKeywords = require("../classes/CreeperKeywords");
 
 class CreeperKeywordsFactory implements Factory {
 
-  name = "CreeperType";
+  name = "CreeperKeywords";
 
   make (...constructorArguments: Array<any>): CreeperKeywords {
     let keywords: Array<string> = constructorArguments.shift();

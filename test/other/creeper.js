@@ -1,9 +1,14 @@
 "use strict";
 
-const Objectify = require("../../dist");
+const objectify = require("../../dist");
 
-let creeper = Objectify.factory("Creeper").make("Test Autochirp", "Autochirp", ["keyword 1", "keyword 2", "keyword 3"]);
+console.log("Object:");
+let creeper = objectify.factory("Creeper").make("Test Autochirp", "Autochirp", ["keyword 1", "keyword 2", "keyword 3"]);
 console.log(creeper);
 
-let creeperRaw = Objectify.toRaw("Creeper", creeper);
+console.log("Object Property:");
+console.log(creeper.frequency.toString());
+
+console.log("Raw:");
+let creeperRaw = objectify.toRaw("Creeper", creeper);
 console.log(creeperRaw);

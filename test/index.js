@@ -4,7 +4,7 @@ const chai = require("chai");
 const should = chai.should();
 const expect = chai.expect;
 
-const Objectify = require("../dist");
+const objectify = require("../dist");
 
 return describe("Objectify", function () {
 
@@ -16,19 +16,19 @@ return describe("Objectify", function () {
   let object;
 
   it("converts a raw object into an object", function (done) {
-    let newObject = Objectify.fromRaw(type, rawObject);
+    let newObject = objectify.fromRaw(type, rawObject);
     object = newObject;
     return done(typeof object === type);
   });
 
   it("converts an object into a raw object", function (done) {
-    let newRawObject = Objectify.toRaw(type, object);
+    let newRawObject = objectify.toRaw(type, object);
     expect(newRawObject).to.deep.equal(rawObject);
     return done();
   });
 
   it("makes an object", function (done) {
-    let newObject = Objectify.factory(type).make(rawObject.name, rawObject.age);
+    let newObject = objectify.factory(type).make(rawObject.name, rawObject.age);
     return done(typeof newObject === type);
   });
 
