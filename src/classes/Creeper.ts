@@ -5,7 +5,8 @@ import CreeperFrequency = require("./CreeperFrequency");
 
 class Creeper {
 
-  creeperId: number;
+  creeperId?: number;
+  clientId?: number;
   name: string;
   type: CreeperType;
   actions: Array<CreeperAction>;

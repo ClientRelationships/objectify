@@ -38,7 +38,7 @@ class CreeperSerialiser implements Serialiser {
     let keywords: CreeperKeywords = new CreeperKeywords();
     keywords.fromString(object.keywords);
     let frequency: CreeperFrequency = new CreeperFrequency(object.actionFrequency);
-    return new Creeper(
+    let creeper = new Creeper(
       object.creeperId,
       object.name,
       type,
@@ -47,6 +47,8 @@ class CreeperSerialiser implements Serialiser {
       object.isEnabled,
       frequency
     );
+    if (object.clientId) creeper.clientId = object.clientId;
+    return creeper;
   }
 
 }

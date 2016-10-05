@@ -10,6 +10,13 @@ class CreeperKeywords extends Array<string> {
     }
   }
 
+  update (oldKeyword: string, newKeyword: string): void {
+    let index = this.indexOf(oldKeyword);
+    if (index > -1) {
+      this[index] = newKeyword;
+    }
+  }
+
   remove (keyword: string): void {
     let index = this.indexOf(keyword);
     if (index > -1) {
