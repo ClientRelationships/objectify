@@ -12,25 +12,24 @@ class CreeperKeywords extends Array<string> {
   }
 
   updateByIndex (index: number, newKeyword: string): CreeperKeywords {
+    if (index === -1) return this;
     this[index] = newKeyword;
     return this;
   }
 
   update (oldKeyword: string, newKeyword: string): CreeperKeywords {
     let index = this.indexOf(oldKeyword);
-    if (!index === -1) return this;
     return this.updateByIndex(index, newKeyword);
   }
 
   removeByIndex (index: number): CreeperKeywords {
-    console.log(index);
+    if (index === -1) return this;
     this.splice(index, 1);
     return this;
   }
 
   remove (keyword: string): CreeperKeywords {
     let index = this.indexOf(keyword);
-    if (!index === -1) return this;
     return this.removeByIndex(index);
   }
 

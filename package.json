@@ -1,6 +1,6 @@
 {
   "name": "objectify",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Serialise and deserialise JavaScript objects in TypeScript.",
   "main": "dist/index.js",
   "scripts": {
