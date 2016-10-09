@@ -13,8 +13,9 @@ class Creeper {
   keywords: CreeperKeywords;
   isEnabled: boolean;
   frequency: CreeperFrequency;
+  delay: number;
 
-  constructor (creeperId: number, name: string, type: CreeperType, keywords: CreeperKeywords, actions: Array<CreeperAction>, isEnabled: boolean, frequency: CreeperFrequency) {
+  constructor (creeperId: number, name: string, type: CreeperType, keywords: CreeperKeywords, actions: Array<CreeperAction>, isEnabled: boolean, frequency: CreeperFrequency, delay: number) {
     this.creeperId = creeperId;
     this.name = name;
     this.type = type;
@@ -22,6 +23,7 @@ class Creeper {
     this.actions = actions;
     this.isEnabled = isEnabled;
     this.frequency = frequency;
+    this.delay = delay;
   }
 
 }

@@ -43,6 +43,7 @@ return describe("Objectify", function () {
     it("makes a creeper", function (done) {
       expect(creeper.frequency.toString()).to.equal("Normal (30/60)");
       expect(creeper.type.toString()).to.equal("Autochirp");
+      expect(creeper.delay).to.equal(300);
       return done();
     });
 

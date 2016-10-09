@@ -15,7 +15,8 @@ class CreeperFactory implements Factory {
     let keywords: CreeperKeywords = new CreeperKeywords();
     keywords.fromArray(constructorArguments.shift());
     let frequency: CreeperFrequency = new CreeperFrequency(30);
-    return new Creeper(undefined, name, type, keywords, [], true, frequency);
+    let delay = 5 * 60;
+    return new Creeper(undefined, name, type, keywords, [], true, frequency, delay);
   }
 
 }
