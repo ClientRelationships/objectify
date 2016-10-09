@@ -1,22 +1,19 @@
+import Serialiser = require("./serialisers/Serialiser");
+import Factory = require("./factories/Factory");
+
 //
 // SERIALISERS
 //
-import Serialiser = require("./serialisers/Serialiser");
 import DogSerialiser = require("./serialisers/Dog");
 import CreeperSerialiser = require("./serialisers/Creeper");
-import CreeperTypeSerialiser = require("./serialisers/CreeperType");
 import CreeperActionSerialiser = require("./serialisers/CreeperAction");
-import CreeperActionTypeSerialiser = require("./serialisers/CreeperActionType");
 
 //
 // FACTORIES
 //
-import Factory = require("./factories/Factory");
 import DogFactory = require("./factories/Dog");
 import CreeperFactory = require("./factories/Creeper");
-import CreeperTypeFactory = require("./factories/CreeperType");
 import CreeperActionFactory = require("./factories/CreeperAction");
-import CreeperActionTypeFactory = require("./factories/CreeperActionType");
 import CreeperFrequenciesFactory = require("./factories/CreeperFrequencies");
 
 module Objectify {
@@ -24,17 +21,13 @@ module Objectify {
   const serialisers: Array<Serialiser> = [
     new DogSerialiser(),
     new CreeperSerialiser(),
-    new CreeperTypeSerialiser(),
-    new CreeperActionSerialiser(),
-    new CreeperActionTypeSerialiser()
+    new CreeperActionSerialiser()
   ];
 
   const factories: Array<Factory> = [
     new DogFactory(),
     new CreeperFactory(),
-    new CreeperTypeFactory(),
     new CreeperActionFactory(),
-    new CreeperActionTypeFactory(),
     new CreeperFrequenciesFactory()
   ];
 

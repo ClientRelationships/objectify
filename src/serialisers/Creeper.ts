@@ -1,5 +1,4 @@
 import Serialiser = require("./Serialiser");
-import CreeperTypeSerialiser = require("./CreeperType");
 
 import Creeper = require("../classes/Creeper");
 import CreeperType = require("../classes/CreeperType");
@@ -11,20 +10,19 @@ import CreeperFrequency = require("../classes/CreeperFrequency");
 class CreeperSerialiser implements Serialiser {
 
   name = "Creeper";
-  creeperTypeSerialiser: CreeperTypeSerialiser = new CreeperTypeSerialiser();
 
   toRaw (creeper: Creeper): Object {
     let o: Object = {};
     if (creeper.name) o["name"] = creeper.name;
-    o["type"] = this.creeperTypeSerialiser.toRaw(creeper.type);
-    o["keywords"] = creeper.keywords.join(", ");
+    o["type"] = creeper.type.value;
+    o["keywords"] = creeper.keywords.toString();
     o["isEnabled"] = creeper.isEnabled;
     o["actionFrequency"] = creeper.frequency.value;
     return o;
   }
 
   fromRaw (object): Creeper {
-    let type: CreeperType = this.creeperTypeSerialiser.fromRaw(object.type);
+    let type: CreeperType = new CreeperType(object.type);
     let actions: Array<CreeperAction> = [];
     if (object.actions) {
       actions = object.actions.map((action) => {
