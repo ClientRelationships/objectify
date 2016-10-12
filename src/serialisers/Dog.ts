@@ -3,8 +3,6 @@ import Dog = require("../classes/Dog");
 
 class DogSerialiser implements Serialiser {
 
-  name = "Dog";
-
   toRaw (dog: Dog): Object {
     return {
       "name": dog.name,

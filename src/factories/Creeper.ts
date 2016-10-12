@@ -7,8 +7,6 @@ import CreeperFrequency = require("../classes/CreeperFrequency");
 
 class CreeperFactory implements Factory {
 
-  name = "Creeper";
-
   make (...constructorArguments: Array<any>): Creeper {
     const name: string = constructorArguments.shift();
     const type: CreeperType = new CreeperType(constructorArguments.shift());

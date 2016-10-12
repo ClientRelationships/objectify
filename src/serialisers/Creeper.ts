@@ -9,8 +9,6 @@ import CreeperFrequency = require("../classes/CreeperFrequency");
 
 class CreeperSerialiser implements Serialiser {
 
-  name = "Creeper";
-
   toRaw (creeper: Creeper): Object {
     const object: Object = {};
     if (creeper.name) object["name"] = creeper.name;

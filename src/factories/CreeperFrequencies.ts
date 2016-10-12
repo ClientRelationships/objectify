@@ -3,8 +3,6 @@ import CreeperFrequency = require("../classes/CreeperFrequency");
 
 class CreeperFrequenciesFactory implements Factory {
 
-  name = "CreeperFrequencies";
-
   make (...constructorArguments: Array<any>): Array<CreeperFrequency> {
     return [
       new CreeperFrequency(1),

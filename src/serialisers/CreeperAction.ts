@@ -5,8 +5,6 @@ import CreeperActionType = require("../classes/CreeperActionType");
 
 class CreeperActionSerialiser implements Serialiser {
 
-  name = "CreeperAction";
-
   toRaw (creeperAction: CreeperAction): Object {
     return {
       "type": creeperAction.type.value,

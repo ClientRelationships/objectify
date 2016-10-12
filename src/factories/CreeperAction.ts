@@ -4,8 +4,6 @@ import CreeperActionType = require("../classes/CreeperActionType");
 
 class CreeperActionFactory implements Factory {
 
-  name = "CreeperAction";
-
   make (...constructorArguments: Array<any>): CreeperAction {
     const type: CreeperActionType = new CreeperActionType(constructorArguments.shift());
     const data = "Hello, World.";
