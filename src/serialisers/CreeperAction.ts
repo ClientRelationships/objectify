@@ -15,9 +15,9 @@ class CreeperActionSerialiser implements Serialiser {
   }
 
   fromRaw (object): CreeperAction {
-    let id = object.creeperActionId;
-    let type: CreeperActionType = new CreeperActionType(object.value);
-    let data: string = object.data;
+    const id = object.creeperActionId;
+    const type: CreeperActionType = new CreeperActionType(object.value);
+    const data: string = object.data;
     return new CreeperAction(
       id,
       type,

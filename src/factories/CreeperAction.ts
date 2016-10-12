@@ -7,8 +7,8 @@ class CreeperActionFactory implements Factory {
   name = "CreeperAction";
 
   make (...constructorArguments: Array<any>): CreeperAction {
-    let type: CreeperActionType = new CreeperActionType(constructorArguments.shift());
-    let data = "Hello, World.";
+    const type: CreeperActionType = new CreeperActionType(constructorArguments.shift());
+    const data = "Hello, World.";
     return new CreeperAction(undefined, type, data);
   }
 

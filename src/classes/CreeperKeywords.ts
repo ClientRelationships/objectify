@@ -18,7 +18,7 @@ class CreeperKeywords extends Array<string> {
   }
 
   update (oldKeyword: string, newKeyword: string): CreeperKeywords {
-    let index = this.indexOf(oldKeyword);
+    const index = this.indexOf(oldKeyword);
     return this.updateByIndex(index, newKeyword);
   }
 
@@ -29,7 +29,7 @@ class CreeperKeywords extends Array<string> {
   }
 
   remove (keyword: string): CreeperKeywords {
-    let index = this.indexOf(keyword);
+    const index = this.indexOf(keyword);
     return this.removeByIndex(index);
   }
 

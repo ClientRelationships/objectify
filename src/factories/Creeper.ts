@@ -10,12 +10,12 @@ class CreeperFactory implements Factory {
   name = "Creeper";
 
   make (...constructorArguments: Array<any>): Creeper {
-    let name: string = constructorArguments.shift();
-    let type: CreeperType = new CreeperType(constructorArguments.shift());
-    let keywords: CreeperKeywords = new CreeperKeywords();
+    const name: string = constructorArguments.shift();
+    const type: CreeperType = new CreeperType(constructorArguments.shift());
+    const keywords: CreeperKeywords = new CreeperKeywords();
     keywords.fromArray(constructorArguments.shift());
-    let frequency: CreeperFrequency = new CreeperFrequency(30);
-    let delay = 5 * 60;
+    const frequency: CreeperFrequency = new CreeperFrequency(30);
+    const delay = 5 * 60;
     return new Creeper(undefined, name, type, keywords, [], true, frequency, delay);
   }
 

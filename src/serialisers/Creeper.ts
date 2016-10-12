@@ -12,18 +12,18 @@ class CreeperSerialiser implements Serialiser {
   name = "Creeper";
 
   toRaw (creeper: Creeper): Object {
-    let o: Object = {};
-    if (creeper.name) o["name"] = creeper.name;
-    o["type"] = creeper.type.value;
-    o["keywords"] = creeper.keywords.toString();
-    o["isEnabled"] = creeper.isEnabled;
-    o["actionFrequency"] = creeper.frequency.value;
-    o["delay"] = creeper.delay;
-    return o;
+    const object: Object = {};
+    if (creeper.name) object["name"] = creeper.name;
+    object["type"] = creeper.type.value;
+    object["keywords"] = creeper.keywords.toString();
+    object["isEnabled"] = creeper.isEnabled;
+    object["actionFrequency"] = creeper.frequency.value;
+    object["delay"] = creeper.delay;
+    return object;
   }
 
   fromRaw (object): Creeper {
-    let type: CreeperType = new CreeperType(object.type);
+    const type: CreeperType = new CreeperType(object.type);
     let actions: Array<CreeperAction> = [];
     if (object.actions) {
       actions = object.actions.map((action) => {
@@ -34,11 +34,11 @@ class CreeperSerialiser implements Serialiser {
         );
       });
     }
-    let keywords: CreeperKeywords = new CreeperKeywords();
+    const keywords: CreeperKeywords = new CreeperKeywords();
     keywords.fromString(object.keywords);
-    let frequency: CreeperFrequency = new CreeperFrequency(object.actionFrequency);
-    let delay = object.delay;
-    let creeper = new Creeper(
+    const frequency: CreeperFrequency = new CreeperFrequency(object.actionFrequency);
+    const delay = object.delay;
+    const creeper = new Creeper(
       object.creeperId,
       object.name,
       type,
