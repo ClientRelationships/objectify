@@ -1,5 +1,6 @@
 import Factory = require("./Factory");
-import Dog = require("../classes/Dog");
+
+import Dog from "../classes/Dog";
 
 class DogFactory implements Factory {
 

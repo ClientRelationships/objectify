@@ -1,12 +1,12 @@
-import CreeperType = require("./CreeperType");
-import CreeperAction = require("./CreeperAction");
-import CreeperKeywords = require("./CreeperKeywords");
-import CreeperFrequency = require("./CreeperFrequency");
+import CreeperType from "../classes/CreeperType";
+import CreeperAction from "../classes/CreeperAction";
+import CreeperKeywords from "../classes/CreeperKeywords";
+import CreeperFrequency from "../classes/CreeperFrequency";
 
-class Creeper {
+export default class Creeper {
 
-  creeperId?: number;
-  clientId?: number;
+  creeperId: number;
+  clientId: number;
   name: string;
   type: CreeperType;
   actions: Array<CreeperAction>;
@@ -27,5 +27,3 @@ class Creeper {
   }
 
 }
-
-export = Creeper;

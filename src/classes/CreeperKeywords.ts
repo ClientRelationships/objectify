@@ -1,6 +1,4 @@
-import CreeperActionType = require("./CreeperActionType");
-
-class CreeperKeywords extends Array<string> {
+export default class CreeperKeywords extends Array<string> {
 
   add (keyword?: string): CreeperKeywords {
     if (typeof keyword === "string") {
@@ -52,5 +50,3 @@ class CreeperKeywords extends Array<string> {
   }
 
 }
-
-export = CreeperKeywords;

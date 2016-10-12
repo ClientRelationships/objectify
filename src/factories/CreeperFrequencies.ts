@@ -1,5 +1,6 @@
 import Factory = require("./Factory");
-import CreeperFrequency = require("../classes/CreeperFrequency");
+
+import CreeperFrequency from "../classes/CreeperFrequency";
 
 class CreeperFrequenciesFactory implements Factory {
 

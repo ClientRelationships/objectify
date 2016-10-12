@@ -1,5 +1,5 @@
 import Serialiser = require("./Serialiser");
-import Dog = require("../classes/Dog");
+import Dog from "../classes/Dog";
 
 class DogSerialiser implements Serialiser {
 

@@ -1,4 +1,4 @@
-class Dog {
+export default class Dog {
 
   name: string;
   age: number;
@@ -13,5 +13,3 @@ class Dog {
   }
 
 }
-
-export = Dog;

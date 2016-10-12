@@ -1,4 +1,4 @@
-class CreeperActionType {
+export default class CreeperActionType {
 
   value: number;
 
@@ -30,5 +30,3 @@ class CreeperActionType {
   }
 
 }
-
-export = CreeperActionType;

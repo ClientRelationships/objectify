@@ -1,4 +1,4 @@
-class CreeperFrequency {
+export default class CreeperFrequency {
 
   value: number;
 
@@ -19,5 +19,3 @@ class CreeperFrequency {
   }
 
 }
-
-export = CreeperFrequency;

@@ -1,11 +1,11 @@
 import Serialiser = require("./Serialiser");
 
-import Creeper = require("../classes/Creeper");
-import CreeperType = require("../classes/CreeperType");
-import CreeperAction = require("../classes/CreeperAction");
-import CreeperActionType = require("../classes/CreeperActionType");
-import CreeperKeywords = require("../classes/CreeperKeywords");
-import CreeperFrequency = require("../classes/CreeperFrequency");
+import Creeper from "../classes/Creeper";
+import CreeperType from "../classes/CreeperType";
+import CreeperAction from "../classes/CreeperAction";
+import CreeperActionType from "../classes/CreeperActionType";
+import CreeperKeywords from "../classes/CreeperKeywords";
+import CreeperFrequency from "../classes/CreeperFrequency";
 
 class CreeperSerialiser implements Serialiser {
 
