@@ -18,27 +18,23 @@ import CreeperFrequenciesFactory = require("./factories/CreeperFrequencies");
 
 module Objectify {
 
-  const serialisers: Array<Serialiser> = [
-    new DogSerialiser(),
-    new CreeperSerialiser(),
-    new CreeperActionSerialiser()
-  ];
+  let serialisers: { [name: string]: Serialiser; } = {};
+  serialisers["Dog"] = new DogSerialiser();
+  serialisers["Creeper"] = new CreeperSerialiser();
+  serialisers["CreeperAction"] = new CreeperActionSerialiser();
 
-  const factories: Array<Factory> = [
-    new DogFactory(),
-    new CreeperFactory(),
-    new CreeperActionFactory(),
-    new CreeperFrequenciesFactory()
-  ];
+  let factories: { [name: string]: Factory; } = {};
+  factories["Dog"] = new DogFactory();
+  factories["Creeper"] = new CreeperFactory();
+  factories["CreeperAction"] = new CreeperActionFactory();
+  factories["CreeperFrequencies"] = new CreeperFrequenciesFactory();
 
-  function getThingByName (array: Array<any>, name: string): any {
-    let matchingThings = array.filter(
-      arrayElement => (name === arrayElement.name)
-    );
-    if (matchingThings.length === 0) {
+  function getThingByName (object: Object, name: string): any {
+    let thing = object[name] || null;
+    if (thing === null) {
       throw new ReferenceError(`Nothing with name ${name}.`);
     }
-    return matchingThings[0];
+    return thing;
   }
 
   export function toRaw (serialiserName: string, object: Object): Object {
