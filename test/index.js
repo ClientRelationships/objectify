@@ -19,7 +19,8 @@ return describe("Objectify", function () {
   it("converts a raw object into an object", function (done) {
     let newObject = objectify.fromRaw(type, rawObject);
     object = newObject;
-    return done(typeof object === type);
+    expect(newObject.constructor.name).to.equal(type);
+    return done();
   });
 
   it("converts an object into a raw object", function (done) {
@@ -30,7 +31,8 @@ return describe("Objectify", function () {
 
   it("makes an object", function (done) {
     let newObject = objectify.factory(type).make(rawObject.name, rawObject.age);
-    return done(typeof newObject === type);
+    expect(newObject.constructor.name).to.equal(type);
+    return done();
   });
 
 
