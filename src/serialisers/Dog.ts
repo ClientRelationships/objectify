@@ -1,4 +1,5 @@
 import Serialiser = require("./Serialiser");
+
 import Dog from "../classes/Dog";
 
 class DogSerialiser implements Serialiser {
