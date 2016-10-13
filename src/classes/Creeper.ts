@@ -25,15 +25,17 @@ export default class Creeper {
     this.name = name;
     this.type = type;
     this.keywords = keywords;
-    this.actions = actions;
     this.isEnabled = isEnabled;
     this.frequency = frequency;
     this.delay = delay;
+    if (actions) {
+      this.actions = actions;
+      this.actions.map(action => action.type.toString()).forEach(actionTypeString => {
+        this.actionsCountStore["unique-action-current-" + actionTypeString] = Math.floor(Math.random() * this.actions.length);
+      });
+    }
     // from vo-runners
     this.actionsCountStore = {};
-    this.actions.map(action => action.type.toString()).forEach(actionTypeString => {
-      this.actionsCountStore["unique-action-current-" + actionTypeString] = Math.floor(Math.random() * this.actions.length);
-    });
     this.autochirp = {
       handlesTweetedAt: [],
       // from vo-outcomes
