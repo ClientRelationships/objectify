@@ -15,9 +15,10 @@ export default class Creeper {
   frequency: CreeperFrequency;
   delay: number;
 
-  // from vo-runners setup methods
+  // from vo-runners
   actionsCountStore: Object;
   autochirp: Object;
+  genderSplit: Object;
 
   constructor (creeperId: number, name: string, type: CreeperType, keywords: CreeperKeywords, actions: Array<CreeperAction>, isEnabled: boolean, frequency: CreeperFrequency, delay: number) {
     this.creeperId = creeperId;
@@ -28,13 +29,15 @@ export default class Creeper {
     this.isEnabled = isEnabled;
     this.frequency = frequency;
     this.delay = delay;
-    // from vo-runners setup methods
+    // from vo-runners
     this.actionsCountStore = {};
     this.actions.map(action => action.type.toString()).forEach(actionTypeString => {
       this.actionsCountStore["unique-action-current-" + actionTypeString] = Math.floor(Math.random() * this.actions.length);
     });
     this.autochirp = {
-      handlesTweetedAt: []
+      handlesTweetedAt: [],
+      // from vo-outcomes
+      replies: []
     };
   }
 
