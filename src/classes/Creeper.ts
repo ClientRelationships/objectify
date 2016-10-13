@@ -30,12 +30,12 @@ export default class Creeper {
     this.delay = delay;
     if (actions) {
       this.actions = actions;
+      this.actionsCountStore = {};
       this.actions.map(action => action.type.toString()).forEach(actionTypeString => {
         this.actionsCountStore["unique-action-current-" + actionTypeString] = Math.floor(Math.random() * this.actions.length);
       });
     }
     // from vo-runners
-    this.actionsCountStore = {};
     this.autochirp = {
       handlesTweetedAt: [],
       // from vo-outcomes
