@@ -20,7 +20,7 @@ export default class Creeper {
   autochirp: Object;
   genderSplit: Object;
 
-  constructor (creeperId: number, name: string, type: CreeperType, keywords: CreeperKeywords, actions: Array<CreeperAction>, isEnabled: boolean, frequency: CreeperFrequency, delay: number) {
+  constructor (creeperId: number, name: string, type: CreeperType, keywords: CreeperKeywords, actions: Array<CreeperAction> = [], isEnabled: boolean = true, frequency: CreeperFrequency = new CreeperFrequency(30), delay: number = 5 * 60) {
     this.creeperId = creeperId;
     this.name = name;
     this.type = type;
@@ -41,6 +41,10 @@ export default class Creeper {
       // from vo-outcomes
       replies: []
     };
+  }
+
+  setClientId (clientId: number): void {
+    this.clientId = clientId;
   }
 
   toString (): string {
