@@ -35,11 +35,20 @@ export default class Creeper {
         this.actionsCountStore["unique-action-current-" + actionTypeString] = Math.floor(Math.random() * this.actions.length);
       });
     }
-    // from vo-runners
+    // from vo-runners and vo-outcomes
     this.autochirp = {
       handlesTweetedAt: [],
-      // from vo-outcomes
-      replies: []
+      replies: [],
+      summaryStatistics: {
+        engagements: 0,
+        engagementRate: 0,
+        urlClicks: 0,
+        urlClickEngagementRate: 0,
+        impressions: 0,
+        retweets: 0,
+        replies: 0,
+        likes: 0
+      }
     };
   }
 
