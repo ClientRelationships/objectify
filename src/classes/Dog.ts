@@ -8,7 +8,7 @@ export default class Dog {
     this.age = age;
   }
 
-  describe (): string {
+  toString (): string {
     return `Woof! I am ${this.age} years old`;
   }
 

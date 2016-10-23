@@ -7,6 +7,9 @@ const objectify = require("../dist");
 
 return describe("Objectify", function () {
 
+  //
+  // GENERIC
+  //
 
   const type = "Dog";
   const rawObject = {
@@ -34,60 +37,143 @@ return describe("Objectify", function () {
     return done();
   });
 
+  //
+  // CREEPERS
+  //
 
-  describe("creepers", function () {
+  const client = {
+    "clientId": 1024,
+    "twitter": "author"
+  };
 
-    const clientId = 1024;
-    let creeper = objectify.factory("Creeper").make("Test Autochirp", "Autochirp", ["keyword 1", "keyword 2", "keyword 3"], undefined, false);
-    creeper.setClientId(clientId);
-    let rawCreeper;
+  const tweetByClient = {
+    "text": "A tweet containing 'keyword 1'",
+    "user": {
+      "screen_name": "author"
+    }
+  };
+
+  const tweetNotByClient = {
+    "text": "A tweet containing 'keyword 1'",
+    "user": {
+      "screen_name": "not_author"
+    }
+  };
+
+  const tweetInReplyTo = {
+    "text": "@someone_else A tweet containing 'keyword 1'",
+    "user": {
+      "screen_name": "not_author"
+    }
+  };
+
+  const makeCreeper = function makeCreeper () {
+    const creeper = objectify.factory("Creeper").make("Test Autochirp", "Autochirp", ["keyword 1", "keyword 2", "keyword 3"]);
+    creeper.setClient(client);
+    creeper.disable();
+    return creeper;
+  };
+
+  const makeRawCreeper = function makeRawCreeper () {
+    const creeper = objectify.factory("Creeper").make("Test Autochirp", "Autochirp", ["keyword 1", "keyword 2", "keyword 3"]);
+    creeper.setClient(client);
+    creeper.disable();
+    creeper.tweeted(tweetNotByClient);
+    const rawCreeper = objectify.toRaw("Creeper", creeper);
+    return rawCreeper;
+  };
+
+  const makeCreeperAction = function makeCreeperAction () {
     const creeperAction = objectify.factory("CreeperAction").make("Reply");
+    return creeperAction;
+  };
+
+  const makeRawCreeperAction = function makeRawCreeperAction () {
+    const creeperAction = objectify.factory("CreeperAction").make("Reply");
+    const rawCreeperAction = objectify.toRaw("CreeperAction", creeperAction);
+    return rawCreeperAction;
+  };
+
+  const makeCreeperFrequencies = function makeCreeperFrequencies () {
     const creeperFrequencies = objectify.factory("CreeperFrequencies").make();
+    return creeperFrequencies;
+  };
 
-    it("makes a creeper", function (done) {
-      expect(creeper.type.toString()).to.equal("Autochirp");
-      expect(creeper.frequency.toString()).to.equal("Normal (30/60)");
-      expect(creeper.delay).to.equal(300);
-      expect(creeper.isEnabled).to.equal(false);
-      expect(creeper.clientId).to.equal(clientId);
-      return done();
-    });
-
-    it("serialises a creeper (toRaw)", function (done) {
-      rawCreeper = objectify.toRaw("Creeper", creeper);
-      expect(rawCreeper.type).to.equal(2);
-      expect(rawCreeper.actionFrequency).to.equal(30);
-      expect(rawCreeper.delay).to.equal(300);
-      expect(rawCreeper.isEnabled).to.equal(0);
-      return done();
-    });
-
-    it("deserialises a creeper (toRaw)", function (done) {
-      let newCreeper = objectify.fromRaw("Creeper", rawCreeper);
-      expect(newCreeper.type.toString()).to.equal("Autochirp");
-      expect(newCreeper.frequency.toString()).to.equal("Normal (30/60)");
-      expect(newCreeper.delay).to.equal(300);
-      expect(newCreeper.isEnabled).to.equal(false);
-      return done();
-    });
-
-    it("makes a creeper action", function (done) {
-      expect(creeperAction.type.toString()).to.equal("Reply");
-      return done();
-    });
-
-    it("serialises a creeper action", function (done) {
-      let rawObject = objectify.toRaw("CreeperAction", creeperAction);
-      expect(rawObject.data).to.equal("Hello, World.");
-      return done();
-    });
-
-    it("makes creeper frequencies", function (done) {
-      expect(creeperFrequencies).length.to.be.at.least(0);
-      return done();
-    });
-
+  it("makes a creeper with the correct type, frequency, delay, client and isEnabled properties", function (done) {
+    const creeper = makeCreeper();
+    expect(creeper.type.toString()).to.equal("Autochirp");
+    expect(creeper.frequency.toString()).to.equal("Normal (30/60)");
+    expect(creeper.delay).to.equal(300);
+    expect(creeper.client).to.deep.equal(client);
+    expect(creeper.isEnabled).to.equal(false);
+    return done();
   });
 
+  it("makes a creeper which doesn't reply to a tweet which is a reply to someone else", function (done2) {
+    const creeper = makeCreeper();
+    expect(creeper.canTweet(tweetInReplyTo, "reply text")).to.equal(false);
+    return done2();
+  });
+
+  it("makes a creeper which replies to a tweet which is not by the author and it hasn't already replied to", function (done2) {
+    const creeper = makeCreeper();
+    expect(creeper.canTweet(tweetNotByClient, "reply text")).to.equal(true);
+    return done2();
+  });
+
+  it("makes a creeper which doesn't reply to a tweet which is not by the author and it has already replied to", function (done2) {
+    const creeper = makeCreeper();
+    creeper.tweeted(tweetNotByClient);
+    expect(creeper.canTweet(tweetNotByClient, "reply text")).to.equal(false);
+    return done2();
+  });
+
+  it("makes a creeper which doesn't reply to a tweet by the client", function (done2) {
+    const creeper = makeCreeper();
+    expect(creeper.canTweet(tweetByClient, "reply text")).to.equal(false);
+    return done2();
+  });
+
+  it("serialises a creeper (toRaw)", function (done) {
+    const rawCreeper = makeRawCreeper();
+    expect(rawCreeper.type).to.equal(2);
+    expect(rawCreeper.actionFrequency).to.equal(30);
+    expect(rawCreeper.delay).to.equal(300);
+    expect(rawCreeper.isEnabled).to.equal(0);
+    expect(rawCreeper.handlesTweetedAt).to.equal(tweetNotByClient.user.screen_name);
+    expect(rawCreeper.client).to.equal(undefined);
+    return done();
+  });
+
+  it("deserialises a creeper (fromRaw)", function (done) {
+    const rawCreeper = makeRawCreeper();
+    const creeper = objectify.fromRaw("Creeper", rawCreeper);
+    expect(creeper.type.toString()).to.equal("Autochirp");
+    expect(creeper.frequency.toString()).to.equal("Normal (30/60)");
+    expect(creeper.delay).to.equal(300);
+    expect(creeper.isEnabled).to.equal(false);
+    expect(creeper.handlesTweetedAt).to.include(tweetNotByClient.user.screen_name);
+    expect(creeper.handlesTweetedAt).to.not.include(tweetByClient.user.screen_name);
+    expect(creeper.client).to.equal(undefined);
+    return done();
+  });
+
+  it("makes a creeper action", function (done) {
+    const creeperAction = makeCreeperAction();
+    expect(creeperAction.type.toString()).to.equal("Reply");
+    return done();
+  });
+
+  it("serialises a creeper action", function (done) {
+    const rawCreeperAction = makeRawCreeperAction();
+    expect(rawCreeperAction.data).to.equal("Hello, World.");
+    return done();
+  });
+
+  it("makes creeper frequencies", function (done) {
+    const creeperFrequencies = makeCreeperFrequencies();
+    expect(creeperFrequencies).length.to.be.at.least(0);
+    return done();
+  });
 
 });

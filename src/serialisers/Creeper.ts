@@ -6,6 +6,7 @@ import CreeperAction from "../classes/CreeperAction";
 import CreeperActionType from "../classes/CreeperActionType";
 import CreeperKeywords from "../classes/CreeperKeywords";
 import CreeperFrequency from "../classes/CreeperFrequency";
+import CreeperHandlesTweetedAt from "../classes/CreeperHandlesTweetedAt";
 
 class CreeperSerialiser implements Serialiser {
 
@@ -17,6 +18,7 @@ class CreeperSerialiser implements Serialiser {
     object["isEnabled"] = (creeper.isEnabled === true ? 1 : 0);
     object["actionFrequency"] = creeper.frequency.value;
     object["delay"] = creeper.delay;
+    object["handlesTweetedAt"] = creeper.handlesTweetedAt.toString();
     return object;
   }
 
@@ -37,6 +39,8 @@ class CreeperSerialiser implements Serialiser {
     const isEnabled: boolean = (object.isEnabled === 1 ? true : false);
     const frequency: CreeperFrequency = new CreeperFrequency(object.actionFrequency);
     const delay = object.delay;
+    const handlesTweetedAt = new CreeperHandlesTweetedAt();
+    handlesTweetedAt.fromString(object.handlesTweetedAt);
     const creeper = new Creeper(
       object.creeperId,
       object.name,
@@ -45,9 +49,12 @@ class CreeperSerialiser implements Serialiser {
       actions,
       isEnabled,
       frequency,
-      delay
+      delay,
+      handlesTweetedAt
     );
-    if (object.clientId) creeper.setClientId(object.clientId);
+    if (object.clientId) creeper.setClient({
+      "clientId": object.clientId
+    });
     return creeper;
   }
 
