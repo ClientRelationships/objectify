@@ -67,6 +67,25 @@ return describe("Objectify", function () {
     }
   };
 
+  const tweetRetweet1 = {
+    "text": "RT A tweet containing 'keyword 1'",
+    "user": {
+      "screen_name": "not_author"
+    }
+  };
+
+  const tweetRetweet2 = {
+    "text": "RT A tweet containing 'keyword 1'",
+    "retweeted_status": {
+      "user": {
+        "screen_name": "not_author"
+      }
+    },
+    "user": {
+      "screen_name": "not_author"
+    }
+  };
+
   const makeCreeper = function makeCreeper () {
     const creeper = objectify.factory("Creeper").make("Test Autochirp", "Autochirp", ["keyword 1", "keyword 2", "keyword 3"]);
     creeper.setClient(client);
@@ -112,6 +131,13 @@ return describe("Objectify", function () {
   it("makes a creeper which doesn't reply to a tweet which is a reply to someone else", function (done2) {
     const creeper = makeCreeper();
     expect(creeper.canTweet(tweetInReplyTo, "reply text")).to.equal(false);
+    return done2();
+  });
+
+  it("makes a creeper which doesn't reply to retweets", function (done2) {
+    const creeper = makeCreeper();
+    expect(creeper.canTweet(tweetRetweet1, "reply text")).to.equal(false);
+    expect(creeper.canTweet(tweetRetweet2, "reply text")).to.equal(false);
     return done2();
   });
 

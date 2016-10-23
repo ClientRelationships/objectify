@@ -7,7 +7,7 @@ import CreeperFrequency from "../classes/CreeperFrequency";
 export default class Creeper {
 
   creeperId: number;
-  client: Object;
+  client: any;
   name: string;
   type: CreeperType;
   actions: Array<CreeperAction>;
@@ -44,7 +44,7 @@ export default class Creeper {
     };
   }
 
-  setClient (client: Object): this {
+  setClient (client: any): this {
     this.client = client;
     return this;
   }
@@ -64,10 +64,19 @@ export default class Creeper {
   };
 
   canTweet (tweet: any, currentSeconds: number): boolean {
+    // don't annoy people (already tweeted at them)
     if (this.handlesTweetedAt.contains(tweet.user.screen_name)) return false;
+    // don't barge into conversations
     if (tweet.text.indexOf("@") === 0) return false;
+    // don't screw with retweets (RT syntax)
+    if (tweet.text.indexOf("RT ") === 0) return false;
+    // don't screw with retweets (object property)
+    if (tweet.retweeted_status !== undefined) return false;
+    // don't spam (tweet too often)
     if (currentSeconds >= this.frequency.value) return false;
+    // don't tweet at yourself
     if (tweet.user.screen_name.toLowerCase() === this.client.twitter.toLowerCase()) return false;
+    // tweet
     return true;
   }
 
