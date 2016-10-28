@@ -36,12 +36,6 @@ export default class Creeper {
         this.actionsCountStore["unique-action-current-" + actionTypeString] = Math.floor(Math.random() * this.actions.length);
       });
     }
-    // from vo-runners and vo-outcomes
-    this.autochirp = {
-      replies: [],
-      summaryStatistics: {},
-      genderSplit: {}
-    };
   }
 
   setClient (client: any): this {
