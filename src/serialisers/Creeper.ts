@@ -16,6 +16,7 @@ class CreeperSerialiser implements Serialiser {
     object["type"] = creeper.type.value;
     object["keywords"] = creeper.keywords.toString();
     object["isEnabled"] = (creeper.isEnabled === true ? 1 : 0);
+    object["isEnabledByUs"] = (creeper.isEnabledByUs === true ? 1 : 0);
     object["actionFrequency"] = creeper.frequency.value;
     object["delay"] = creeper.delay;
     object["handlesTweetedAt"] = creeper.handlesTweetedAt.toString();
@@ -37,6 +38,7 @@ class CreeperSerialiser implements Serialiser {
     const keywords: CreeperKeywords = new CreeperKeywords();
     keywords.fromString(object.keywords);
     const isEnabled: boolean = (object.isEnabled === 1 ? true : false);
+    const isEnabledByUs: boolean = (object.isEnabledByUs === 1 ? true : false);
     const frequency: CreeperFrequency = new CreeperFrequency(object.actionFrequency);
     const delay = object.delay;
     const handlesTweetedAt = new CreeperHandlesTweetedAt();
@@ -48,6 +50,7 @@ class CreeperSerialiser implements Serialiser {
       keywords,
       actions,
       isEnabled,
+      isEnabledByUs,
       frequency,
       delay,
       handlesTweetedAt

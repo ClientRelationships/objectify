@@ -16,7 +16,8 @@ class CreeperFactory implements Factory {
     if (constructorArguments.length > 0) {
       const actions: Array<any> = constructorArguments.shift();
       const isEnabled: boolean = constructorArguments.shift();
-      return new Creeper(undefined, name, type, keywords, undefined, isEnabled);
+      const isEnabledByUs: boolean = constructorArguments.shift();
+      return new Creeper(undefined, name, type, keywords, undefined, isEnabled, isEnabledByUs);
     } else {
       return new Creeper(undefined, name, type, keywords);
     }
