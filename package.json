@@ -1,6 +1,6 @@
 {
   "name": "objectify",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "Serialise and deserialise JavaScript objects in TypeScript.",
   "main": "dist/index.js",
   "scripts": {
@@ -19,11 +19,11 @@
     "url": "https://github.com/jadaradix/objectify/issues"
   },
   "dependencies": {
-    "typescript": "^2.0.3",
+    "typescript": "^2.1.4",
     "uglifyjs-folder": "0.3.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "mocha": "^3.1.0"
+    "mocha": "^3.2.0"
   }
 }
