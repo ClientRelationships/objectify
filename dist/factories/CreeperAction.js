@@ -10,7 +10,7 @@ var CreeperActionFactory = (function () {
             constructorArguments[_i - 0] = arguments[_i];
         }
         var type = new CreeperActionType_1["default"](constructorArguments.shift());
-        var data = "Hello, World.";
+        var data = constructorArguments.shift();
         return new CreeperAction_1["default"](undefined, type, data);
     };
     return CreeperActionFactory;

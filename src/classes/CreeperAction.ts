@@ -6,12 +6,10 @@ export default class CreeperAction {
   type: CreeperActionType;
   data: string;
 
-  constructor (creeperActionId: number, type: CreeperActionType, data?: string) {
+  constructor (creeperActionId: number, type: CreeperActionType, data: string = "Hello, World.") {
     this.creeperActionId = creeperActionId;
     this.type = type;
-    if (data) {
-      this.data = data;
-    }
+    this.data = data;
   }
 
 }

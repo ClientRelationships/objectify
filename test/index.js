@@ -103,12 +103,12 @@ return describe("Objectify", function () {
   };
 
   const makeCreeperAction = function makeCreeperAction () {
-    const creeperAction = objectify.factory("CreeperAction").make("Reply");
+    const creeperAction = objectify.factory("CreeperAction").make("Reply", "Text.");
     return creeperAction;
   };
 
   const makeRawCreeperAction = function makeRawCreeperAction () {
-    const creeperAction = objectify.factory("CreeperAction").make("Reply");
+    const creeperAction = objectify.factory("CreeperAction").make("Reply", "Text.");
     const rawCreeperAction = objectify.toRaw("CreeperAction", creeperAction);
     return rawCreeperAction;
   };
@@ -190,12 +190,13 @@ return describe("Objectify", function () {
   it("makes a creeper action", function (done) {
     const creeperAction = makeCreeperAction();
     expect(creeperAction.type.toString()).to.equal("Reply");
+    expect(creeperAction.data.toString()).to.be.a("string");
     return done();
   });
 
   it("serialises a creeper action", function (done) {
     const rawCreeperAction = makeRawCreeperAction();
-    expect(rawCreeperAction.data).to.equal("Hello, World.");
+    expect(rawCreeperAction.data).to.be.a("string");
     return done();
   });
 
