@@ -194,15 +194,56 @@ return describe("Objectify", function () {
     return done();
   });
 
-  it("serialises a creeper action", function (done) {
+  it("serialises a creeper action (toRaw)", function (done) {
     const rawCreeperAction = makeRawCreeperAction();
     expect(rawCreeperAction.data).to.be.a("string");
+    return done();
+  });
+
+  it("deserialises a creeper action (fromRaw)", function (done) {
+    const rawCreeperAction = makeRawCreeperAction();
+    const creeperAction = objectify.fromRaw("CreeperAction", rawCreeperAction);
+    expect(creeperAction.data).to.be.a("string");
     return done();
   });
 
   it("makes creeper frequencies", function (done) {
     const creeperFrequencies = makeCreeperFrequencies();
     expect(creeperFrequencies).length.to.be.at.least(0);
+    return done();
+  });
+
+  //
+  // CONVERTERS
+  //
+
+  const makeConverter = function makeConverter () {
+    const converter = objectify.factory("Converter").make("Get Customers");
+    return converter;
+  };
+
+  const makeRawConverter = function makeRawConverter () {
+    const converter = objectify.factory("Converter").make("Get Customers");
+    const rawConverter = objectify.toRaw("Converter", converter);
+    return rawConverter;
+  };
+
+  it("makes a converter", function (done) {
+    const converter = makeConverter();
+    expect(converter.name).to.equal("Get Customers");
+    return done();
+  });
+
+  it("serialises a converter (toRaw)", function (done) {
+    const rawConverter = makeRawConverter();
+    expect(rawConverter.name).to.equal("Get Customers");
+    return done();
+  });
+
+  it("deserialises a converter (fromRaw)", function (done) {
+    const rawConverter = makeRawConverter();
+    const converter = objectify.fromRaw("Converter", rawConverter);
+    expect(converter.name).to.equal("Get Customers");
     return done();
   });
 
