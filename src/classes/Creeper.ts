@@ -8,6 +8,7 @@ export default class Creeper {
 
   creeperId: number;
   client: any;
+  converter: any;
   name: string;
   type: CreeperType;
   actions: Array<CreeperAction>;
@@ -17,6 +18,7 @@ export default class Creeper {
   frequency: CreeperFrequency;
   delay: number;
   handlesTweetedAt: CreeperHandlesTweetedAt;
+  converterId: number;
 
   actionsCountStore: Object;
   autochirp: Object;
@@ -31,7 +33,8 @@ export default class Creeper {
     isEnabledByUs: boolean = false,
     frequency: CreeperFrequency = new CreeperFrequency(30),
     delay: number = 5 * 60, 
-    handlesTweetedAt: CreeperHandlesTweetedAt = new CreeperHandlesTweetedAt()
+    handlesTweetedAt: CreeperHandlesTweetedAt = new CreeperHandlesTweetedAt(),
+    converterId = null
   ) {
     this.creeperId = creeperId;
     this.name = name;
@@ -42,6 +45,7 @@ export default class Creeper {
     this.frequency = frequency;
     this.delay = delay;
     this.handlesTweetedAt = handlesTweetedAt;
+    this.converterId = converterId;
     if (actions) {
       this.actions = actions;
       this.actionsCountStore = {};
@@ -53,6 +57,11 @@ export default class Creeper {
 
   setClient (client: any): this {
     this.client = client;
+    return this;
+  }
+
+  setConverter (converter: any): this {
+    this.converter = converter;
     return this;
   }
 

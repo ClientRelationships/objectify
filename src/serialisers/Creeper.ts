@@ -20,6 +20,7 @@ class CreeperSerialiser implements Serialiser {
     object["actionFrequency"] = creeper.frequency.value;
     object["delay"] = creeper.delay;
     object["handlesTweetedAt"] = creeper.handlesTweetedAt.toString();
+    object["converterId"] = creeper.converterId;
     return object;
   }
 
@@ -43,6 +44,7 @@ class CreeperSerialiser implements Serialiser {
     const delay = object.delay;
     const handlesTweetedAt = new CreeperHandlesTweetedAt();
     handlesTweetedAt.fromString(object.handlesTweetedAt);
+    const converterId = object.converterId;
     const creeper = new Creeper(
       object.creeperId,
       object.name,
@@ -53,7 +55,8 @@ class CreeperSerialiser implements Serialiser {
       isEnabledByUs,
       frequency,
       delay,
-      handlesTweetedAt
+      handlesTweetedAt,
+      converterId
     );
     if (object.clientId) creeper.setClient({
       "clientId": object.clientId

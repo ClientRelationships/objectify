@@ -20,6 +20,7 @@ var CreeperSerialiser = (function () {
         object["actionFrequency"] = creeper.frequency.value;
         object["delay"] = creeper.delay;
         object["handlesTweetedAt"] = creeper.handlesTweetedAt.toString();
+        object["converterId"] = creeper.converterId;
         return object;
     };
     CreeperSerialiser.prototype.fromRaw = function (object) {
@@ -38,7 +39,8 @@ var CreeperSerialiser = (function () {
         var delay = object.delay;
         var handlesTweetedAt = new CreeperHandlesTweetedAt_1["default"]();
         handlesTweetedAt.fromString(object.handlesTweetedAt);
-        var creeper = new Creeper_1["default"](object.creeperId, object.name, type, keywords, actions, isEnabled, isEnabledByUs, frequency, delay, handlesTweetedAt);
+        var converterId = object.converterId;
+        var creeper = new Creeper_1["default"](object.creeperId, object.name, type, keywords, actions, isEnabled, isEnabledByUs, frequency, delay, handlesTweetedAt, converterId);
         if (object.clientId)
             creeper.setClient({
                 "clientId": object.clientId

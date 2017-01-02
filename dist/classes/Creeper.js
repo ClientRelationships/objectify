@@ -2,7 +2,7 @@
 var CreeperHandlesTweetedAt_1 = require("../classes/CreeperHandlesTweetedAt");
 var CreeperFrequency_1 = require("../classes/CreeperFrequency");
 var Creeper = (function () {
-    function Creeper(creeperId, name, type, keywords, actions, isEnabled, isEnabledByUs, frequency, delay, handlesTweetedAt) {
+    function Creeper(creeperId, name, type, keywords, actions, isEnabled, isEnabledByUs, frequency, delay, handlesTweetedAt, converterId) {
         var _this = this;
         if (actions === void 0) { actions = []; }
         if (isEnabled === void 0) { isEnabled = false; }
@@ -10,6 +10,7 @@ var Creeper = (function () {
         if (frequency === void 0) { frequency = new CreeperFrequency_1["default"](30); }
         if (delay === void 0) { delay = 5 * 60; }
         if (handlesTweetedAt === void 0) { handlesTweetedAt = new CreeperHandlesTweetedAt_1["default"](); }
+        if (converterId === void 0) { converterId = null; }
         this.creeperId = creeperId;
         this.name = name;
         this.type = type;
@@ -19,6 +20,7 @@ var Creeper = (function () {
         this.frequency = frequency;
         this.delay = delay;
         this.handlesTweetedAt = handlesTweetedAt;
+        this.converterId = converterId;
         if (actions) {
             this.actions = actions;
             this.actionsCountStore = {};
@@ -29,6 +31,10 @@ var Creeper = (function () {
     }
     Creeper.prototype.setClient = function (client) {
         this.client = client;
+        return this;
+    };
+    Creeper.prototype.setConverter = function (converter) {
+        this.converter = converter;
         return this;
     };
     Creeper.prototype.toString = function () {
