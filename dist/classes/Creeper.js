@@ -6,7 +6,7 @@ var Creeper = (function () {
         var _this = this;
         if (actions === void 0) { actions = []; }
         if (isEnabled === void 0) { isEnabled = false; }
-        if (isEnabledByUs === void 0) { isEnabledByUs = false; }
+        if (isEnabledByUs === void 0) { isEnabledByUs = true; }
         if (frequency === void 0) { frequency = new CreeperFrequency_1["default"](30); }
         if (delay === void 0) { delay = 5 * 60; }
         if (handlesTweetedAt === void 0) { handlesTweetedAt = new CreeperHandlesTweetedAt_1["default"](); }
