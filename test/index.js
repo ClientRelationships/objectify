@@ -218,12 +218,12 @@ return describe("Objectify", function () {
   //
 
   const makeConverter = function makeConverter () {
-    const converter = objectify.factory("Converter").make("Get Customers");
+    const converter = objectify.factory("Converter").make(undefined, "Get Customers");
     return converter;
   };
 
   const makeRawConverter = function makeRawConverter () {
-    const converter = objectify.factory("Converter").make("Get Customers");
+    const converter = objectify.factory("Converter").make(undefined, "Get Customers");
     const rawConverter = objectify.toRaw("Converter", converter);
     return rawConverter;
   };

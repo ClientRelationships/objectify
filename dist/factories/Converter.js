@@ -8,8 +8,9 @@ var ConverterFactory = (function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             constructorArguments[_i - 0] = arguments[_i];
         }
-        var name = constructorArguments.shift();
-        return new Converter_1["default"](undefined, name);
+        var object = Object.create(Converter_1["default"].prototype);
+        Converter_1["default"].apply(object, constructorArguments);
+        return object;
     };
     return ConverterFactory;
 }());

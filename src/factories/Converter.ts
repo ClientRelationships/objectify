@@ -5,8 +5,9 @@ import Converter from "../classes/Converter";
 class ConverterFactory implements Factory {
 
   make (...constructorArguments: Array<any>): Converter {
-    const name: string = constructorArguments.shift();
-    return new Converter(undefined, name);
+    const object = Object.create(Converter.prototype);
+    Converter.apply(object, constructorArguments);
+    return object;
   }
 
 }
