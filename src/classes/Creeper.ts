@@ -30,7 +30,7 @@ export default class Creeper {
     keywords: CreeperKeywords,
     actions: Array<CreeperAction> = [],
     isEnabled: boolean = false,
-    isEnabledByUs: boolean = true,
+    isEnabledByUs: boolean = false,
     frequency: CreeperFrequency = new CreeperFrequency(30),
     delay: number = 5 * 60, 
     handlesTweetedAt: CreeperHandlesTweetedAt = new CreeperHandlesTweetedAt(),
