@@ -21,8 +21,8 @@ class CreeperSerialiser implements Serialiser {
     object["delay"] = creeper.delay;
     object["handlesTweetedAt"] = creeper.handlesTweetedAt.toString();
     object["converterId"] = creeper.converterId;
-    object["deepProfileOnFind"] = creeper.deepProfileOnFind;
-    object["deepProfileOnAction"] = creeper.deepProfileOnAction;
+    object["deepProfileOnFind"] = (creeper.deepProfileOnFind === true ? 1 : 0);
+    object["deepProfileOnAction"] = (creeper.deepProfileOnAction === true ? 1 : 0);
     return object;
   }
 
@@ -47,8 +47,8 @@ class CreeperSerialiser implements Serialiser {
     const handlesTweetedAt = new CreeperHandlesTweetedAt();
     handlesTweetedAt.fromString(object.handlesTweetedAt);
     const converterId = object.converterId;
-    const deepProfileOnFind = object.deepProfileOnFind;
-    const deepProfileOnAction = object.deepProfileOnAction;
+    const deepProfileOnFind = (object.deepProfileOnFind === 1 ? true : false);
+    const deepProfileOnAction = (object.deepProfileOnAction === 1 ? true : false);
     const creeper = new Creeper(
       object.creeperId,
       object.name,

@@ -172,8 +172,8 @@ return describe("Objectify", function () {
     expect(rawCreeper.isEnabledByUs).to.equal(0);
     expect(rawCreeper.handlesTweetedAt).to.equal(tweetNotByClient.user.screen_name);
     expect(rawCreeper.client).to.equal(undefined);
-    expect(rawCreeper.deepProfileOnFind).to.equal(false);
-    expect(rawCreeper.deepProfileOnAction).to.equal(false);
+    expect(rawCreeper.deepProfileOnFind).to.equal(0);
+    expect(rawCreeper.deepProfileOnAction).to.equal(0);
     return done();
   });
 
