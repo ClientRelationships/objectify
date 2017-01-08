@@ -244,7 +244,7 @@ return describe("Objectify", function () {
   it("serialises a converter (toRaw)", function (done) {
     const rawConverter = makeRawConverter();
     expect(rawConverter.name).to.equal("Get Customers");
-    expect(rawConverter.deepProfileOnSubmit).to.equal(false);
+    expect(rawConverter.deepProfileOnSubmit).to.equal(0);
     return done();
   });
 
