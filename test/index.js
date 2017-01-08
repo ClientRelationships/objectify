@@ -126,6 +126,8 @@ return describe("Objectify", function () {
     expect(creeper.client).to.deep.equal(client);
     expect(creeper.isEnabled).to.equal(false);
     expect(creeper.isEnabledByUs).to.equal(false);
+    expect(creeper.deepProfileOnFind).to.equal(false);
+    expect(creeper.deepProfileOnAction).to.equal(false);
     return done();
   });
 
@@ -170,6 +172,8 @@ return describe("Objectify", function () {
     expect(rawCreeper.isEnabledByUs).to.equal(0);
     expect(rawCreeper.handlesTweetedAt).to.equal(tweetNotByClient.user.screen_name);
     expect(rawCreeper.client).to.equal(undefined);
+    expect(rawCreeper.deepProfileOnFind).to.equal(false);
+    expect(rawCreeper.deepProfileOnAction).to.equal(false);
     return done();
   });
 
@@ -184,6 +188,8 @@ return describe("Objectify", function () {
     expect(creeper.handlesTweetedAt).to.include(tweetNotByClient.user.screen_name);
     expect(creeper.handlesTweetedAt).to.not.include(tweetByClient.user.screen_name);
     expect(creeper.client).to.equal(undefined);
+    expect(creeper.deepProfileOnFind).to.equal(false);
+    expect(creeper.deepProfileOnAction).to.equal(false);
     return done();
   });
 
@@ -231,12 +237,14 @@ return describe("Objectify", function () {
   it("makes a converter", function (done) {
     const converter = makeConverter();
     expect(converter.name).to.equal("Get Customers");
+    expect(converter.deepProfileOnSubmit).to.equal(false);
     return done();
   });
 
   it("serialises a converter (toRaw)", function (done) {
     const rawConverter = makeRawConverter();
     expect(rawConverter.name).to.equal("Get Customers");
+    expect(rawConverter.deepProfileOnSubmit).to.equal(false);
     return done();
   });
 
@@ -244,6 +252,7 @@ return describe("Objectify", function () {
     const rawConverter = makeRawConverter();
     const converter = objectify.fromRaw("Converter", rawConverter);
     expect(converter.name).to.equal("Get Customers");
+    expect(converter.deepProfileOnSubmit).to.equal(false);
     return done();
   });
 

@@ -12,7 +12,8 @@ class ConverterSerialiser implements Serialiser {
       "persuader": converter.persuader,
       "imageUrl": converter.imageUrl,
       "forwardUrl": converter.forwardUrl,
-      "callToAction": converter.callToAction
+      "callToAction": converter.callToAction,
+      "deepProfileOnSubmit": converter.deepProfileOnSubmit
     };
   }
 
@@ -27,6 +28,7 @@ class ConverterSerialiser implements Serialiser {
       object.imageUrl,
       object.forwardUrl,
       object.callToAction,
+      object.deepProfileOnSubmit,
       object._links
     );
   }

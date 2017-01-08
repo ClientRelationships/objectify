@@ -9,6 +9,7 @@ export default class Converter {
   imageUrl: string;
   forwardUrl: string;
   callToAction: string;
+  deepProfileOnSubmit: boolean;
 
   constructor (
     converterId: number,
@@ -19,6 +20,7 @@ export default class Converter {
     imageUrl: string = "?",
     forwardUrl: string = "?",
     callToAction: string = "?",
+    deepProfileOnSubmit: boolean = false,
     _links: any = {}
   ) {
     this.converterId = converterId;
@@ -29,6 +31,7 @@ export default class Converter {
     this.imageUrl = imageUrl;
     this.forwardUrl = forwardUrl;
     this.callToAction = callToAction;
+    this.deepProfileOnSubmit = deepProfileOnSubmit;
     this._links = _links;
   }
 

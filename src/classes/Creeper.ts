@@ -19,6 +19,8 @@ export default class Creeper {
   delay: number;
   handlesTweetedAt: CreeperHandlesTweetedAt;
   converterId: number;
+  deepProfileOnFind: boolean;
+  deepProfileOnAction: boolean;
 
   actionsCountStore: Object;
   autochirp: Object;
@@ -34,7 +36,9 @@ export default class Creeper {
     frequency: CreeperFrequency = new CreeperFrequency(30),
     delay: number = 5 * 60, 
     handlesTweetedAt: CreeperHandlesTweetedAt = new CreeperHandlesTweetedAt(),
-    converterId = null
+    converterId = null,
+    deepProfileOnFind = false,
+    deepProfileOnAction = false
   ) {
     this.creeperId = creeperId;
     this.name = name;
@@ -46,6 +50,8 @@ export default class Creeper {
     this.delay = delay;
     this.handlesTweetedAt = handlesTweetedAt;
     this.converterId = converterId;
+    this.deepProfileOnFind = deepProfileOnFind;
+    this.deepProfileOnAction = deepProfileOnAction;
     if (actions) {
       this.actions = actions;
       this.actionsCountStore = {};
