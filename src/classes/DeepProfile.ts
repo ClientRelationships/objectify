@@ -36,9 +36,12 @@ export default class DeepProfile {
     this.fields = fields;
   }
 
-  setField (key, value): string {
+  setField (key, value): void {
     this.fields.set(key, value);
-    return value;
+  }
+
+  getField (key): string {
+    return this.fields.get(key);
   }
 
   toString (): string {

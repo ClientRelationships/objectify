@@ -24,7 +24,9 @@ var DeepProfile = (function () {
     }
     DeepProfile.prototype.setField = function (key, value) {
         this.fields.set(key, value);
-        return value;
+    };
+    DeepProfile.prototype.getField = function (key) {
+        return this.fields.get(key);
     };
     DeepProfile.prototype.toString = function () {
         return this.source + " (ID " + this.deepProfileId + ")";

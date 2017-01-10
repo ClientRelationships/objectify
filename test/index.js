@@ -287,7 +287,7 @@ return describe("Objectify", function () {
   it("deserialises a deep profile (fromRaw)", function (done) {
     const rawDeepProfile = makeRawDeepProfile();
     const deepProfile = objectify.fromRaw("DeepProfile", rawDeepProfile);
-    expect(deepProfile.fields.get("TwitterHandle")).to.equal("jadaradix");
+    expect(deepProfile.getField("TwitterHandle")).to.equal("jadaradix");
     return done();
   });
 
