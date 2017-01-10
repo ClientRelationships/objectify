@@ -8,6 +8,7 @@ import DogSerialiser = require("./serialisers/Dog");
 import CreeperSerialiser = require("./serialisers/Creeper");
 import CreeperActionSerialiser = require("./serialisers/CreeperAction");
 import ConverterSerialiser = require("./serialisers/Converter");
+import DeepProfileSerialiser = require("./serialisers/DeepProfile");
 
 //
 // FACTORIES
@@ -17,6 +18,7 @@ import CreeperFactory = require("./factories/Creeper");
 import CreeperActionFactory = require("./factories/CreeperAction");
 import CreeperFrequenciesFactory = require("./factories/CreeperFrequencies");
 import ConverterFactory = require("./factories/Converter");
+import DeepProfileFactory = require("./factories/DeepProfile");
 
 module Objectify {
 
@@ -25,6 +27,7 @@ module Objectify {
   serialisers["Creeper"] = new CreeperSerialiser();
   serialisers["CreeperAction"] = new CreeperActionSerialiser();
   serialisers["Converter"] = new ConverterSerialiser();
+  serialisers["DeepProfile"] = new DeepProfileSerialiser();
 
   const factories: { [name: string]: Factory; } = {};
   factories["Dog"] = new DogFactory();
@@ -32,6 +35,7 @@ module Objectify {
   factories["CreeperAction"] = new CreeperActionFactory();
   factories["CreeperFrequencies"] = new CreeperFrequenciesFactory();
   factories["Converter"] = new ConverterFactory();
+  factories["DeepProfile"] = new DeepProfileFactory();
 
   function getThingByName (object: Object, name: string): any {
     const thing = object[name] || null;

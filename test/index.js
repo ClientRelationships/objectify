@@ -256,4 +256,39 @@ return describe("Objectify", function () {
     return done();
   });
 
+  //
+  // DEEP PROFILES
+  //
+
+  const makeDeepProfile = function makeDeepProfile () {
+    const deepProfile = objectify.factory("DeepProfile").make(undefined);
+    deepProfile.setField("TwitterHandle", "jadaradix");
+    return deepProfile;
+  };
+
+  const makeRawDeepProfile = function makeRawDeepProfile () {
+    const deepProfile = objectify.factory("DeepProfile").make(undefined);
+    deepProfile.setField("TwitterHandle", "jadaradix");
+    const rawDeepProfile = objectify.toRaw("DeepProfile", deepProfile);
+    return rawDeepProfile;
+  };
+
+  it("makes a deep profile", function (done) {
+    const deepProfile = makeDeepProfile();
+    return done();
+  });
+
+  it("serialises a deep profile (toRaw)", function (done) {
+    const rawDeepProfile = makeRawDeepProfile();
+    expect(rawDeepProfile.fieldTwitterHandle).to.equal("jadaradix");
+    return done();
+  });
+
+  it("deserialises a deep profile (fromRaw)", function (done) {
+    const rawDeepProfile = makeRawDeepProfile();
+    const deepProfile = objectify.fromRaw("DeepProfile", rawDeepProfile);
+    expect(deepProfile.fields.get("TwitterHandle")).to.equal("jadaradix");
+    return done();
+  });
+
 });
