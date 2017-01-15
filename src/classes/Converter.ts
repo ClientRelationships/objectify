@@ -14,12 +14,12 @@ export default class Converter {
   constructor (
     converterId: number,
     name: string,
-    grabber: string = "?",
-    explainer: string = "?",
-    persuader: string = "?",
+    grabber: string = "<Attention Grabbing Headline>",
+    explainer: string = "<Justify Information Retrieval>",
+    persuader: string = "<Persuade and Convince>",
     imageUrl: string = "?",
     forwardUrl: string = "?",
-    callToAction: string = "?",
+    callToAction: string = "Continue",
     deepProfileOnSubmit: boolean = false,
     _links: any = {}
   ) {
