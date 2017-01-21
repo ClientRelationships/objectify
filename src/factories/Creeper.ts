@@ -12,12 +12,27 @@ class CreeperFactory implements Factory {
     const type: CreeperType = new CreeperType(constructorArguments.shift());
     const keywords: CreeperKeywords = new CreeperKeywords();
     keywords.fromArray(constructorArguments.shift());
-
     if (constructorArguments.length > 0) {
       const actions: Array<any> = constructorArguments.shift();
       const isEnabled: boolean = constructorArguments.shift();
       const isEnabledByUs: boolean = constructorArguments.shift();
-      return new Creeper(undefined, name, type, keywords, undefined, isEnabled, isEnabledByUs);
+      const geo: string = constructorArguments.shift();
+      return new Creeper(
+        undefined,
+        name,
+        type,
+        keywords,
+        undefined,
+        isEnabled,
+        isEnabledByUs,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        geo
+       );
     } else {
       return new Creeper(undefined, name, type, keywords);
     }

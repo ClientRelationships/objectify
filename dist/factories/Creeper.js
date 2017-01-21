@@ -18,7 +18,8 @@ var CreeperFactory = (function () {
             var actions = constructorArguments.shift();
             var isEnabled = constructorArguments.shift();
             var isEnabledByUs = constructorArguments.shift();
-            return new Creeper_1["default"](undefined, name, type, keywords, undefined, isEnabled, isEnabledByUs);
+            var geo = constructorArguments.shift();
+            return new Creeper_1["default"](undefined, name, type, keywords, undefined, isEnabled, isEnabledByUs, undefined, undefined, undefined, undefined, undefined, undefined, geo);
         }
         else {
             return new Creeper_1["default"](undefined, name, type, keywords);

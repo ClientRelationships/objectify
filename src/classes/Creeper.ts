@@ -21,6 +21,7 @@ export default class Creeper {
   converterId: number;
   deepProfileOnFind: boolean;
   deepProfileOnAction: boolean;
+  geo: string;
 
   actionsCountStore: Object;
   autochirp: Object;
@@ -38,7 +39,8 @@ export default class Creeper {
     handlesTweetedAt: CreeperHandlesTweetedAt = new CreeperHandlesTweetedAt(),
     converterId = null,
     deepProfileOnFind = false,
-    deepProfileOnAction = false
+    deepProfileOnAction = false,
+    geo = ""
   ) {
     this.creeperId = creeperId;
     this.name = name;
@@ -52,6 +54,7 @@ export default class Creeper {
     this.converterId = converterId;
     this.deepProfileOnFind = deepProfileOnFind;
     this.deepProfileOnAction = deepProfileOnAction;
+    this.geo = geo;
     if (actions) {
       this.actions = actions;
       this.actionsCountStore = {};
@@ -98,6 +101,13 @@ export default class Creeper {
     if (currentSeconds >= this.frequency.value) return false;
     // don't tweet at yourself
     if (tweet.user.screen_name.toLowerCase() === this.client.twitter.toLowerCase()) return false;
+    // if geo is specified and it's similar to tweet location
+    if (
+      this.geo.length > 0 &&
+      this.geo.toLowerCase() !== tweet.user.location.toLowerCase()
+     ) {
+      return false;
+    }
     // tweet
     return true;
   }
@@ -114,6 +124,11 @@ export default class Creeper {
 
   disable (): this {
     this.isEnabled = false;
+    return this;
+  }
+
+  setGeo (geo: string): this {
+    this.geo = geo;
     return this;
   }
 

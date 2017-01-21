@@ -49,28 +49,32 @@ return describe("Objectify", function () {
   const tweetByClient = {
     "text": "A tweet containing 'keyword 1'",
     "user": {
-      "screen_name": "author"
+      "screen_name": "author",
+      "location": ""
     }
   };
 
   const tweetNotByClient = {
     "text": "A tweet containing 'keyword 1'",
     "user": {
-      "screen_name": "not_author"
+      "screen_name": "not_author",
+      "location": ""
     }
   };
 
   const tweetInReplyTo = {
     "text": "@someone_else A tweet containing 'keyword 1'",
     "user": {
-      "screen_name": "not_author"
+      "screen_name": "not_author",
+      "location": ""
     }
   };
 
   const tweetRetweet1 = {
     "text": "RT A tweet containing 'keyword 1'",
     "user": {
-      "screen_name": "not_author"
+      "screen_name": "not_author",
+      "location": ""
     }
   };
 
@@ -78,24 +82,44 @@ return describe("Objectify", function () {
     "text": "RT A tweet containing 'keyword 1'",
     "retweeted_status": {
       "user": {
-        "screen_name": "not_author"
+        "screen_name": "not_author",
+        "location": ""
       }
     },
     "user": {
-      "screen_name": "not_author"
+      "screen_name": "not_author",
+      "location": ""
     }
   };
 
-  const makeCreeper = function makeCreeper () {
+  const tweetInLondon = {
+    "text": "I live in London!",
+    "user": {
+      "screen_name": "not_author",
+      "location": "London"
+    }
+  };
+
+  const tweetInManchester = {
+    "text": "I live in Manchester!",
+    "user": {
+      "screen_name": "not_author",
+      "location": "Manchester"
+    }
+  };
+
+  const makeCreeper = function makeCreeper (geo) {
     const creeper = objectify.factory("Creeper").make("Test Autochirp", "Autochirp", ["keyword 1", "keyword 2", "keyword 3"]);
     creeper.setClient(client);
+    creeper.setGeo(geo || "");
     creeper.disable();
     return creeper;
   };
 
-  const makeRawCreeper = function makeRawCreeper () {
+  const makeRawCreeper = function makeRawCreeper (geo) {
     const creeper = objectify.factory("Creeper").make("Test Autochirp", "Autochirp", ["keyword 1", "keyword 2", "keyword 3"]);
     creeper.setClient(client);
+    creeper.setGeo(geo || "");
     creeper.disable();
     creeper.tweeted(tweetNotByClient);
     const rawCreeper = objectify.toRaw("Creeper", creeper);
@@ -119,7 +143,7 @@ return describe("Objectify", function () {
   };
 
   it("makes a creeper with the correct properties (type, frequency, delay, client...)", function (done) {
-    const creeper = makeCreeper();
+    const creeper = makeCreeper("London");
     expect(creeper.type.toString()).to.equal("Autochirp");
     expect(creeper.frequency.toString()).to.equal("Normal (30/60)");
     expect(creeper.delay).to.equal(300);
@@ -128,6 +152,7 @@ return describe("Objectify", function () {
     expect(creeper.isEnabledByUs).to.equal(false);
     expect(creeper.deepProfileOnFind).to.equal(false);
     expect(creeper.deepProfileOnAction).to.equal(false);
+    expect(creeper.geo).to.equal("London");
     return done();
   });
 
@@ -163,8 +188,20 @@ return describe("Objectify", function () {
     return done2();
   });
 
+  it("makes a London creeper which replies to a tweet in London", function (done2) {
+    const creeper = makeCreeper("London");
+    expect(creeper.canTweet(tweetInLondon, "reply text")).to.equal(true);
+    return done2();
+  });
+
+  it("makes a London creeper which doesn't reply to a tweet in Manchester", function (done2) {
+    const creeper = makeCreeper("London");
+    expect(creeper.canTweet(tweetInManchester, "reply text")).to.equal(false);
+    return done2();
+  });
+
   it("serialises a creeper (toRaw)", function (done) {
-    const rawCreeper = makeRawCreeper();
+    const rawCreeper = makeRawCreeper("London");
     expect(rawCreeper.type).to.equal(2);
     expect(rawCreeper.actionFrequency).to.equal(30);
     expect(rawCreeper.delay).to.equal(300);
@@ -174,11 +211,12 @@ return describe("Objectify", function () {
     expect(rawCreeper.client).to.equal(undefined);
     expect(rawCreeper.deepProfileOnFind).to.equal(0);
     expect(rawCreeper.deepProfileOnAction).to.equal(0);
+    expect(rawCreeper.geo).to.equal("London");
     return done();
   });
 
   it("deserialises a creeper (fromRaw)", function (done) {
-    const rawCreeper = makeRawCreeper();
+    const rawCreeper = makeRawCreeper("London");
     const creeper = objectify.fromRaw("Creeper", rawCreeper);
     expect(creeper.type.toString()).to.equal("Autochirp");
     expect(creeper.frequency.toString()).to.equal("Normal (30/60)");
@@ -190,6 +228,7 @@ return describe("Objectify", function () {
     expect(creeper.client).to.equal(undefined);
     expect(creeper.deepProfileOnFind).to.equal(false);
     expect(creeper.deepProfileOnAction).to.equal(false);
+    expect(creeper.geo).to.equal("London");
     return done();
   });
 

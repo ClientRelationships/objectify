@@ -23,6 +23,7 @@ class CreeperSerialiser implements Serialiser {
     object["converterId"] = creeper.converterId;
     object["deepProfileOnFind"] = (creeper.deepProfileOnFind === true ? 1 : 0);
     object["deepProfileOnAction"] = (creeper.deepProfileOnAction === true ? 1 : 0);
+    object["geo"] = creeper.geo;
     return object;
   }
 
@@ -43,10 +44,8 @@ class CreeperSerialiser implements Serialiser {
     const isEnabled: boolean = (object.isEnabled === 1 ? true : false);
     const isEnabledByUs: boolean = (object.isEnabledByUs === 1 ? true : false);
     const frequency: CreeperFrequency = new CreeperFrequency(object.actionFrequency);
-    const delay = object.delay;
     const handlesTweetedAt = new CreeperHandlesTweetedAt();
     handlesTweetedAt.fromString(object.handlesTweetedAt);
-    const converterId = object.converterId;
     const deepProfileOnFind = (object.deepProfileOnFind === 1 ? true : false);
     const deepProfileOnAction = (object.deepProfileOnAction === 1 ? true : false);
     const creeper = new Creeper(
@@ -58,11 +57,12 @@ class CreeperSerialiser implements Serialiser {
       isEnabled,
       isEnabledByUs,
       frequency,
-      delay,
+      object.delay,
       handlesTweetedAt,
-      converterId,
+      object.converterId,
       deepProfileOnFind,
-      deepProfileOnAction
+      deepProfileOnAction,
+      object.geo
     );
     if (object.clientId) creeper.setClient({
       "clientId": object.clientId

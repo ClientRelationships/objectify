@@ -23,6 +23,7 @@ var CreeperSerialiser = (function () {
         object["converterId"] = creeper.converterId;
         object["deepProfileOnFind"] = (creeper.deepProfileOnFind === true ? 1 : 0);
         object["deepProfileOnAction"] = (creeper.deepProfileOnAction === true ? 1 : 0);
+        object["geo"] = creeper.geo;
         return object;
     };
     CreeperSerialiser.prototype.fromRaw = function (object) {
@@ -38,13 +39,11 @@ var CreeperSerialiser = (function () {
         var isEnabled = (object.isEnabled === 1 ? true : false);
         var isEnabledByUs = (object.isEnabledByUs === 1 ? true : false);
         var frequency = new CreeperFrequency_1["default"](object.actionFrequency);
-        var delay = object.delay;
         var handlesTweetedAt = new CreeperHandlesTweetedAt_1["default"]();
         handlesTweetedAt.fromString(object.handlesTweetedAt);
-        var converterId = object.converterId;
         var deepProfileOnFind = (object.deepProfileOnFind === 1 ? true : false);
         var deepProfileOnAction = (object.deepProfileOnAction === 1 ? true : false);
-        var creeper = new Creeper_1["default"](object.creeperId, object.name, type, keywords, actions, isEnabled, isEnabledByUs, frequency, delay, handlesTweetedAt, converterId, deepProfileOnFind, deepProfileOnAction);
+        var creeper = new Creeper_1["default"](object.creeperId, object.name, type, keywords, actions, isEnabled, isEnabledByUs, frequency, object.delay, handlesTweetedAt, object.converterId, deepProfileOnFind, deepProfileOnAction, object.geo);
         if (object.clientId)
             creeper.setClient({
                 "clientId": object.clientId

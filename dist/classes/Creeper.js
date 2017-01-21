@@ -2,7 +2,7 @@
 var CreeperHandlesTweetedAt_1 = require("../classes/CreeperHandlesTweetedAt");
 var CreeperFrequency_1 = require("../classes/CreeperFrequency");
 var Creeper = (function () {
-    function Creeper(creeperId, name, type, keywords, actions, isEnabled, isEnabledByUs, frequency, delay, handlesTweetedAt, converterId, deepProfileOnFind, deepProfileOnAction) {
+    function Creeper(creeperId, name, type, keywords, actions, isEnabled, isEnabledByUs, frequency, delay, handlesTweetedAt, converterId, deepProfileOnFind, deepProfileOnAction, geo) {
         var _this = this;
         if (actions === void 0) { actions = []; }
         if (isEnabled === void 0) { isEnabled = false; }
@@ -13,6 +13,7 @@ var Creeper = (function () {
         if (converterId === void 0) { converterId = null; }
         if (deepProfileOnFind === void 0) { deepProfileOnFind = false; }
         if (deepProfileOnAction === void 0) { deepProfileOnAction = false; }
+        if (geo === void 0) { geo = ""; }
         this.creeperId = creeperId;
         this.name = name;
         this.type = type;
@@ -25,6 +26,7 @@ var Creeper = (function () {
         this.converterId = converterId;
         this.deepProfileOnFind = deepProfileOnFind;
         this.deepProfileOnAction = deepProfileOnAction;
+        this.geo = geo;
         if (actions) {
             this.actions = actions;
             this.actionsCountStore = {};
@@ -74,6 +76,11 @@ var Creeper = (function () {
         // don't tweet at yourself
         if (tweet.user.screen_name.toLowerCase() === this.client.twitter.toLowerCase())
             return false;
+        // if geo is specified and it's similar to tweet location
+        if (this.geo.length > 0 &&
+            this.geo.toLowerCase() !== tweet.user.location.toLowerCase()) {
+            return false;
+        }
         // tweet
         return true;
     };
@@ -87,6 +94,10 @@ var Creeper = (function () {
     };
     Creeper.prototype.disable = function () {
         this.isEnabled = false;
+        return this;
+    };
+    Creeper.prototype.setGeo = function (geo) {
+        this.geo = geo;
         return this;
     };
     return Creeper;
