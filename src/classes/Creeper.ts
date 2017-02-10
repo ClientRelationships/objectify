@@ -101,9 +101,10 @@ export default class Creeper {
     if (currentSeconds >= this.frequency.value) return false;
     // don't tweet at yourself
     if (tweet.user.screen_name.toLowerCase() === this.client.twitter.toLowerCase()) return false;
-    // if geo is specified and it's similar to tweet location
+    // if geo is specified and user location is specified and they are similar
     if (
       this.geo.length > 0 &&
+      tweet.user.location !== null &&
       this.geo.toLowerCase() !== tweet.user.location.toLowerCase()
      ) {
       return false;
