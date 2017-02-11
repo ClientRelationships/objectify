@@ -1,3 +1,5 @@
+import ConverterPurpose from "../classes/ConverterPurpose";
+
 export default class Converter {
 
   converterId: number;
@@ -10,6 +12,7 @@ export default class Converter {
   forwardUrl: string;
   callToAction: string;
   deepProfileOnSubmit: boolean;
+  purpose: ConverterPurpose;
 
   constructor (
     converterId: number,
@@ -21,6 +24,7 @@ export default class Converter {
     forwardUrl: string = "?",
     callToAction: string = "Continue",
     deepProfileOnSubmit: boolean = false,
+    purpose: ConverterPurpose = new ConverterPurpose(),
     _links: any = {}
   ) {
     this.converterId = converterId;
@@ -32,6 +36,7 @@ export default class Converter {
     this.forwardUrl = forwardUrl;
     this.callToAction = callToAction;
     this.deepProfileOnSubmit = deepProfileOnSubmit;
+    this.purpose = purpose;
     this._links = _links;
   }
 

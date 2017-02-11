@@ -277,6 +277,7 @@ return describe("Objectify", function () {
     const converter = makeConverter();
     expect(converter.name).to.equal("Get Customers");
     expect(converter.deepProfileOnSubmit).to.equal(false);
+    expect(converter.purpose.toString()).to.equal("Default");
     return done();
   });
 
@@ -284,6 +285,7 @@ return describe("Objectify", function () {
     const rawConverter = makeRawConverter();
     expect(rawConverter.name).to.equal("Get Customers");
     expect(rawConverter.deepProfileOnSubmit).to.equal(0);
+    expect(rawConverter.purpose).to.equal(1);
     return done();
   });
 
@@ -292,6 +294,7 @@ return describe("Objectify", function () {
     const converter = objectify.fromRaw("Converter", rawConverter);
     expect(converter.name).to.equal("Get Customers");
     expect(converter.deepProfileOnSubmit).to.equal(false);
+    expect(converter.purpose.toString()).to.equal("Default");
     return done();
   });
 

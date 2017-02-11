@@ -1,6 +1,7 @@
 import Serialiser = require("./Serialiser");
 
 import Converter from "../classes/Converter";
+import ConverterPurpose from "../classes/ConverterPurpose";
 
 class ConverterSerialiser implements Serialiser {
 
@@ -13,7 +14,8 @@ class ConverterSerialiser implements Serialiser {
       "imageUrl": converter.imageUrl,
       "forwardUrl": converter.forwardUrl,
       "callToAction": converter.callToAction,
-      "deepProfileOnSubmit": (converter.deepProfileOnSubmit === true ? 1 : 0)
+      "deepProfileOnSubmit": (converter.deepProfileOnSubmit === true ? 1 : 0),
+      "purpose": converter.purpose.value
     };
   }
 
@@ -29,6 +31,7 @@ class ConverterSerialiser implements Serialiser {
       object.forwardUrl,
       object.callToAction,
       (object.deepProfileOnSubmit === 1 ? true : false),
+      new ConverterPurpose(object.purpose),
       object._links
     );
   }

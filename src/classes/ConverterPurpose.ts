@@ -1,22 +1,19 @@
-export default class CreeperType {
+export default class ConverterPurpose {
 
   value: number;
 
   constructor (value: any = null) {
     if (typeof value === "string") {
-      if (value === null) value = "Autochirp";
+      if (value === null) value = "Default";
       switch (value) {
-        case "All":
+        case "Default":
           this.value = 1;
           break;
-        case "Autochirp":
+        case "SMS":
           this.value = 2;
           break;
-        case "LeadGen":
-          this.value = 3;
-          break;
         default:
-          throw new Error("CreeperType constructor string did not match a known string");
+          throw new Error("ConverterPurpose constructor string did not match a known string");
       }
     } else {
       if (value === null) value = 1;
@@ -27,11 +24,9 @@ export default class CreeperType {
   toString (): string {
     switch (this.value) {
       case 1:
-        return "All";
+        return "Default";
       case 2:
-        return "Autochirp";
-      case 3:
-        return "LeadGen";
+        return "SMS";
     }
     return "Unknown";
   }

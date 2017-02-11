@@ -1,5 +1,6 @@
 "use strict";
 var Converter_1 = require("../classes/Converter");
+var ConverterPurpose_1 = require("../classes/ConverterPurpose");
 var ConverterSerialiser = (function () {
     function ConverterSerialiser() {
     }
@@ -12,12 +13,13 @@ var ConverterSerialiser = (function () {
             "imageUrl": converter.imageUrl,
             "forwardUrl": converter.forwardUrl,
             "callToAction": converter.callToAction,
-            "deepProfileOnSubmit": (converter.deepProfileOnSubmit === true ? 1 : 0)
+            "deepProfileOnSubmit": (converter.deepProfileOnSubmit === true ? 1 : 0),
+            "purpose": converter.purpose.value
         };
     };
     ConverterSerialiser.prototype.fromRaw = function (object) {
         var id = object.converterId;
-        return new Converter_1["default"](id, object.name, object.grabber, object.explainer, object.persuader, object.imageUrl, object.forwardUrl, object.callToAction, (object.deepProfileOnSubmit === 1 ? true : false), object._links);
+        return new Converter_1["default"](id, object.name, object.grabber, object.explainer, object.persuader, object.imageUrl, object.forwardUrl, object.callToAction, (object.deepProfileOnSubmit === 1 ? true : false), new ConverterPurpose_1["default"](object.purpose), object._links);
     };
     return ConverterSerialiser;
 }());

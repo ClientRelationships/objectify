@@ -1,6 +1,7 @@
 "use strict";
+var ConverterPurpose_1 = require("../classes/ConverterPurpose");
 var Converter = (function () {
-    function Converter(converterId, name, grabber, explainer, persuader, imageUrl, forwardUrl, callToAction, deepProfileOnSubmit, _links) {
+    function Converter(converterId, name, grabber, explainer, persuader, imageUrl, forwardUrl, callToAction, deepProfileOnSubmit, purpose, _links) {
         if (grabber === void 0) { grabber = "<Attention Grabbing Headline>"; }
         if (explainer === void 0) { explainer = "<Justify Information Retrieval>"; }
         if (persuader === void 0) { persuader = "<Persuade and Convince>"; }
@@ -8,6 +9,7 @@ var Converter = (function () {
         if (forwardUrl === void 0) { forwardUrl = "?"; }
         if (callToAction === void 0) { callToAction = "Continue"; }
         if (deepProfileOnSubmit === void 0) { deepProfileOnSubmit = false; }
+        if (purpose === void 0) { purpose = new ConverterPurpose_1["default"](); }
         if (_links === void 0) { _links = {}; }
         this.converterId = converterId;
         this.name = name;
@@ -18,6 +20,7 @@ var Converter = (function () {
         this.forwardUrl = forwardUrl;
         this.callToAction = callToAction;
         this.deepProfileOnSubmit = deepProfileOnSubmit;
+        this.purpose = purpose;
         this._links = _links;
     }
     Converter.prototype.toString = function () {

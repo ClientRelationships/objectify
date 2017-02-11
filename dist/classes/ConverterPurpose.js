@@ -1,22 +1,19 @@
 "use strict";
-var CreeperType = (function () {
-    function CreeperType(value) {
+var ConverterPurpose = (function () {
+    function ConverterPurpose(value) {
         if (value === void 0) { value = null; }
         if (typeof value === "string") {
             if (value === null)
-                value = "Autochirp";
+                value = "Default";
             switch (value) {
-                case "All":
+                case "Default":
                     this.value = 1;
                     break;
-                case "Autochirp":
+                case "SMS":
                     this.value = 2;
                     break;
-                case "LeadGen":
-                    this.value = 3;
-                    break;
                 default:
-                    throw new Error("CreeperType constructor string did not match a known string");
+                    throw new Error("ConverterPurpose constructor string did not match a known string");
             }
         }
         else {
@@ -25,18 +22,16 @@ var CreeperType = (function () {
             this.value = value;
         }
     }
-    CreeperType.prototype.toString = function () {
+    ConverterPurpose.prototype.toString = function () {
         switch (this.value) {
             case 1:
-                return "All";
+                return "Default";
             case 2:
-                return "Autochirp";
-            case 3:
-                return "LeadGen";
+                return "SMS";
         }
         return "Unknown";
     };
-    return CreeperType;
+    return ConverterPurpose;
 }());
 exports.__esModule = true;
-exports["default"] = CreeperType;
+exports["default"] = ConverterPurpose;
