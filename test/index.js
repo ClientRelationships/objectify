@@ -278,6 +278,7 @@ return describe("Objectify", function () {
     expect(converter.name).to.equal("Get Customers");
     expect(converter.deepProfileOnSubmit).to.equal(false);
     expect(converter.purpose.toString()).to.equal("Default");
+    expect(converter.getFields()).to.be.an("array");
     return done();
   });
 
@@ -295,6 +296,7 @@ return describe("Objectify", function () {
     expect(converter.name).to.equal("Get Customers");
     expect(converter.deepProfileOnSubmit).to.equal(false);
     expect(converter.purpose.toString()).to.equal("Default");
+    expect(converter.getFields()).to.be.an("array");
     return done();
   });
 

@@ -44,4 +44,8 @@ export default class Converter {
     return `${this.name} (ID ${this.converterId})`;
   }
 
+  getFields (): Array<Object> {
+    return this.purpose.getFields();
+  }
+
 }

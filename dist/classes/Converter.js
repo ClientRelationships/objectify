@@ -26,6 +26,9 @@ var Converter = (function () {
     Converter.prototype.toString = function () {
         return this.name + " (ID " + this.converterId + ")";
     };
+    Converter.prototype.getFields = function () {
+        return this.purpose.getFields();
+    };
     return Converter;
 }());
 exports.__esModule = true;

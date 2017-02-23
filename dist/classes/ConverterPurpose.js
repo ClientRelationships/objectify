@@ -22,6 +22,37 @@ var ConverterPurpose = (function () {
             this.value = value;
         }
     }
+    ConverterPurpose.prototype.getFields = function () {
+        switch (this.value) {
+            case 1:
+                return [
+                    {
+                        "name": "name",
+                        "text": "Name",
+                        "type": "text",
+                        "value": ""
+                    },
+                    // name of "email" makes this have id="email" so e-mails are suggested/autocompleted in the form
+                    {
+                        "name": "email",
+                        "text": "E-mail",
+                        "type": "email",
+                        "value": ""
+                    }
+                ];
+            case 2:
+                return [
+                    {
+                        "name": "phone",
+                        "text": "Phone Number",
+                        "type": "phone",
+                        "value": ""
+                    }
+                ];
+            default:
+                return [];
+        }
+    };
     ConverterPurpose.prototype.toString = function () {
         switch (this.value) {
             case 1:
