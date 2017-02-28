@@ -45,7 +45,7 @@ var ConverterPurpose = (function () {
                     {
                         "name": "phone",
                         "text": "Phone Number",
-                        "type": "phone",
+                        "type": "tel",
                         "value": ""
                     }
                 ];

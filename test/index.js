@@ -148,8 +148,7 @@ return describe("Objectify", function () {
     expect(creeper.frequency.toString()).to.equal("Normal (30/60)");
     expect(creeper.delay).to.equal(300);
     expect(creeper.client).to.deep.equal(client);
-    expect(creeper.isEnabled).to.equal(false);
-    expect(creeper.isEnabledByUs).to.equal(false);
+    expect(creeper.state).to.equal("disabled");
     expect(creeper.deepProfileOnFind).to.equal(false);
     expect(creeper.deepProfileOnAction).to.equal(false);
     expect(creeper.geo).to.equal("London");
@@ -205,8 +204,7 @@ return describe("Objectify", function () {
     expect(rawCreeper.type).to.equal(2);
     expect(rawCreeper.actionFrequency).to.equal(30);
     expect(rawCreeper.delay).to.equal(300);
-    expect(rawCreeper.isEnabled).to.equal(0);
-    expect(rawCreeper.isEnabledByUs).to.equal(0);
+    expect(rawCreeper.state).to.equal("disabled");
     expect(rawCreeper.handlesTweetedAt).to.equal(tweetNotByClient.user.screen_name);
     expect(rawCreeper.client).to.equal(undefined);
     expect(rawCreeper.deepProfileOnFind).to.equal(0);
@@ -221,8 +219,7 @@ return describe("Objectify", function () {
     expect(creeper.type.toString()).to.equal("Autochirp");
     expect(creeper.frequency.toString()).to.equal("Normal (30/60)");
     expect(creeper.delay).to.equal(300);
-    expect(creeper.isEnabled).to.equal(false);
-    expect(creeper.isEnabledByUs).to.equal(false);
+    expect(creeper.state).to.equal("disabled");
     expect(creeper.handlesTweetedAt).to.include(tweetNotByClient.user.screen_name);
     expect(creeper.handlesTweetedAt).to.not.include(tweetByClient.user.screen_name);
     expect(creeper.client).to.equal(undefined);

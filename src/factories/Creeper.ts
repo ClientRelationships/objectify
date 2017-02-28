@@ -14,8 +14,7 @@ class CreeperFactory implements Factory {
     keywords.fromArray(constructorArguments.shift());
     if (constructorArguments.length > 0) {
       const actions: Array<any> = constructorArguments.shift();
-      const isEnabled: boolean = constructorArguments.shift();
-      const isEnabledByUs: boolean = constructorArguments.shift();
+      const state: string = constructorArguments.shift();
       const geo: string = constructorArguments.shift();
       return new Creeper(
         undefined,
@@ -23,8 +22,7 @@ class CreeperFactory implements Factory {
         type,
         keywords,
         undefined,
-        isEnabled,
-        isEnabledByUs,
+        state,
         undefined,
         undefined,
         undefined,

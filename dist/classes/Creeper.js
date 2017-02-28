@@ -2,11 +2,10 @@
 var CreeperHandlesTweetedAt_1 = require("../classes/CreeperHandlesTweetedAt");
 var CreeperFrequency_1 = require("../classes/CreeperFrequency");
 var Creeper = (function () {
-    function Creeper(creeperId, name, type, keywords, actions, isEnabled, isEnabledByUs, frequency, delay, handlesTweetedAt, converterId, deepProfileOnFind, deepProfileOnAction, geo) {
+    function Creeper(creeperId, name, type, keywords, actions, state, frequency, delay, handlesTweetedAt, converterId, deepProfileOnFind, deepProfileOnAction, geo) {
         var _this = this;
         if (actions === void 0) { actions = []; }
-        if (isEnabled === void 0) { isEnabled = false; }
-        if (isEnabledByUs === void 0) { isEnabledByUs = false; }
+        if (state === void 0) { state = "not-approved"; }
         if (frequency === void 0) { frequency = new CreeperFrequency_1["default"](30); }
         if (delay === void 0) { delay = 5 * 60; }
         if (handlesTweetedAt === void 0) { handlesTweetedAt = new CreeperHandlesTweetedAt_1["default"](); }
@@ -18,8 +17,7 @@ var Creeper = (function () {
         this.name = name;
         this.type = type;
         this.keywords = keywords;
-        this.isEnabled = isEnabled;
-        this.isEnabledByUs = isEnabledByUs;
+        this.state = state;
         this.frequency = frequency;
         this.delay = delay;
         this.handlesTweetedAt = handlesTweetedAt;
@@ -90,11 +88,12 @@ var Creeper = (function () {
         return this;
     };
     Creeper.prototype.enable = function () {
-        this.isEnabled = true;
+        this.state = "enabled";
         return this;
+        f;
     };
     Creeper.prototype.disable = function () {
-        this.isEnabled = false;
+        this.state = "disabled";
         return this;
     };
     Creeper.prototype.setGeo = function (geo) {
