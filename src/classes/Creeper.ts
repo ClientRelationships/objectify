@@ -14,6 +14,7 @@ export default class Creeper {
   actions: Array<CreeperAction>;
   keywords: CreeperKeywords;
   state: string;
+  isEnabledByUs: boolean;
   frequency: CreeperFrequency;
   delay: number;
   handlesTweetedAt: CreeperHandlesTweetedAt;
@@ -31,7 +32,8 @@ export default class Creeper {
     type: CreeperType,
     keywords: CreeperKeywords,
     actions: Array<CreeperAction> = [],
-    state: string = "not-approved",
+    state: string = "disabled",
+    isEnabledByUs: boolean = false,
     frequency: CreeperFrequency = new CreeperFrequency(30),
     delay: number = 5 * 60, 
     handlesTweetedAt: CreeperHandlesTweetedAt = new CreeperHandlesTweetedAt(),
@@ -45,6 +47,7 @@ export default class Creeper {
     this.type = type;
     this.keywords = keywords;
     this.state = state;
+    this.isEnabledByUs = isEnabledByUs;
     this.frequency = frequency;
     this.delay = delay;
     this.handlesTweetedAt = handlesTweetedAt;
