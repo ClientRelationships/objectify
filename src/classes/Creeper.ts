@@ -134,7 +134,7 @@ export default class Creeper {
     }
     // don't tweet if geofilter is specified and this doesn't work out
     if (this.geofilter.length > 0) {
-      if (tweet.user.location.toString().length === 0) { // deliberately vague - be liberal in what we accept
+      if (!tweet.user.location) { // null ???
         // user doesn't specify a location, so can't be sure - don't tweet
         console.log("canTweet decision", "don't tweet if geofilter is specified and this doesn't work out -> user doesn't specify a location, so can't be sure - don't tweet");
         return false;
