@@ -1,6 +1,7 @@
 import CreeperType from "../classes/CreeperType";
 import CreeperAction from "../classes/CreeperAction";
 import CreeperKeywords from "../classes/CreeperKeywords";
+import CreeperLocation from "../classes/CreeperLocation";
 import CreeperHandlesTweetedAt from "../classes/CreeperHandlesTweetedAt";
 import CreeperFrequency from "../classes/CreeperFrequency";
 
@@ -21,7 +22,7 @@ export default class Creeper {
   converterId: number;
   deepProfileOnFind: boolean;
   deepProfileOnAction: boolean;
-  geo: string;
+  geofilter: CreeperLocation;
 
   actionsCountStore: Object;
   autochirp: Object;
@@ -35,12 +36,12 @@ export default class Creeper {
     state: string = "disabled",
     isEnabledByUs: boolean = false,
     frequency: CreeperFrequency = new CreeperFrequency(30),
-    delay: number = 5 * 60, 
+    delay: number = 5 * 60,
     handlesTweetedAt: CreeperHandlesTweetedAt = new CreeperHandlesTweetedAt(),
     converterId = null,
-    deepProfileOnFind = false,
-    deepProfileOnAction = false,
-    geo = ""
+    deepProfileOnFind: boolean = false,
+    deepProfileOnAction: boolean = false,
+    geofilter: CreeperLocation = new CreeperLocation()
   ) {
     this.creeperId = creeperId;
     this.name = name;
@@ -54,7 +55,7 @@ export default class Creeper {
     this.converterId = converterId;
     this.deepProfileOnFind = deepProfileOnFind;
     this.deepProfileOnAction = deepProfileOnAction;
-    this.geo = geo;
+    this.geofilter = geofilter;
     if (actions) {
       this.actions = actions;
       this.actionsCountStore = {};
@@ -88,7 +89,8 @@ export default class Creeper {
     }
   };
 
-  canTweet (tweet: any, currentSeconds: number): boolean {
+  canTweet (tweet: any, currentSeconds: number, keyword: string): boolean {
+    const elements = tweet.text.split(" ");
     // don't annoy people (already tweeted at them)
     if (this.handlesTweetedAt.contains(tweet.user.screen_name)) return false;
     // don't barge into conversations
@@ -101,13 +103,51 @@ export default class Creeper {
     if (currentSeconds >= this.frequency.value) return false;
     // don't tweet at yourself
     if (tweet.user.screen_name.toLowerCase() === this.client.twitter.toLowerCase()) return false;
-    // if geo is specified and user location is specified and they are similar
-    if (
-      this.geo.length > 0 &&
-      tweet.user.location !== null &&
-      this.geo.toLowerCase() !== tweet.user.location.toLowerCase()
-     ) {
+    // don't tweet if geofilter is specified and user location is specified and they are similar
+    if (this.geofilter.length > 0 && tweet.user.location !== null) {
+      const matchingLocations = this.geofilter.filter(location =>
+        location.toLowerCase() === tweet.user.location.toLowerCase()
+      );
+      if (matchingLocations.length === 0) {
+        return false;
+      }
+    }
+    // don't tweet at an obviously spammy tweet
+    const elementsLinks = elements.filter(element => element.indexOf("http:") === 0 || element.indexOf("https:") === 0);
+    const elementsHashtags = elements.filter(element => element[0] === "#");
+    const elementsMentions = elements.filter(element => element[0] === "@");
+    if (elements.length === elementsLinks.length + elementsHashtags.length + elementsMentions.length) {
       return false;
+    }
+    // don't reply to a tweet where the keyword is part of another word
+    // this code is "self documenting"
+    if (tweet.text.length > keyword.length) {
+      var regex = new RegExp(keyword, "gi"), result, indices = [];
+      while ((result = regex.exec(tweet.text))) {
+        indices.push(result.index);
+      }
+      if (indices.length === 0) return false; // it was never mentioned... stupid twitter
+      let allowedWrappingCharacters = [" ", "\"", "'", "!", ".", ","];
+      let indicesWithASpaceBeforeOrAfter = indices.filter(index => {
+        if (index === 0) {
+          // first: needs a space after it
+          return (allowedWrappingCharacters.indexOf(tweet.text[index + keyword.length]) !== -1);
+        } else if (index === tweet.text.length - keyword.length) {
+          // last: needs a space before it
+          return (allowedWrappingCharacters.indexOf(tweet.text[index - 1]) !== -1);
+        } else {
+          // middle: needs a space before it AND after it
+          return (allowedWrappingCharacters.indexOf(tweet.text[index - 1]) !== -1 && allowedWrappingCharacters.indexOf(tweet.text[index + keyword.length]) !== -1);
+        }
+      });
+      // console.log('tweet text', tweet.text);
+      // console.log('indices', indices);
+      // console.log('indicesWithASpaceBeforeOrAfter', indicesWithASpaceBeforeOrAfter);
+      if (indicesWithASpaceBeforeOrAfter.length === 0) return false;
+      // don't tweet at foreigners
+      if (tweet.user.lang && tweet.user.lang !== "en") {
+        return false;
+      }
     }
     // tweet
     return true;
@@ -120,7 +160,7 @@ export default class Creeper {
 
   enable (): this {
     this.state = "enabled";
-    return this;f
+    return this;
   }
 
   disable (): this {
@@ -128,8 +168,8 @@ export default class Creeper {
     return this;
   }
 
-  setGeo (geo: string): this {
-    this.geo = geo;
+  setGeo (geofilter: CreeperLocation): this {
+    this.geofilter = geofilter;
     return this;
   }
 

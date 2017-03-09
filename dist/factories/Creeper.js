@@ -2,6 +2,7 @@
 var Creeper_1 = require("../classes/Creeper");
 var CreeperType_1 = require("../classes/CreeperType");
 var CreeperKeywords_1 = require("../classes/CreeperKeywords");
+var CreeperLocation_1 = require("../classes/CreeperLocation");
 var CreeperFactory = (function () {
     function CreeperFactory() {
     }
@@ -17,8 +18,9 @@ var CreeperFactory = (function () {
         if (constructorArguments.length > 0) {
             var actions = constructorArguments.shift();
             var state = constructorArguments.shift();
-            var geo = constructorArguments.shift();
-            return new Creeper_1["default"](undefined, name, type, keywords, undefined, state, undefined, undefined, undefined, undefined, undefined, undefined, undefined, geo);
+            var geofilter = new CreeperLocation_1["default"]();
+            geofilter.fromArray(constructorArguments.shift());
+            return new Creeper_1["default"](undefined, name, type, keywords, undefined, state, undefined, undefined, undefined, undefined, undefined, undefined, undefined, geofilter);
         }
         else {
             return new Creeper_1["default"](undefined, name, type, keywords);

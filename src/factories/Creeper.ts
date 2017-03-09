@@ -3,6 +3,7 @@ import Factory = require("./Factory");
 import Creeper from "../classes/Creeper";
 import CreeperType from "../classes/CreeperType";
 import CreeperKeywords from "../classes/CreeperKeywords";
+import CreeperLocation from "../classes/CreeperLocation";
 import CreeperFrequency from "../classes/CreeperFrequency";
 
 class CreeperFactory implements Factory {
@@ -15,7 +16,8 @@ class CreeperFactory implements Factory {
     if (constructorArguments.length > 0) {
       const actions: Array<any> = constructorArguments.shift();
       const state: string = constructorArguments.shift();
-      const geo: string = constructorArguments.shift();
+      const geofilter: CreeperLocation = new CreeperLocation();
+      geofilter.fromArray(constructorArguments.shift());
       return new Creeper(
         undefined,
         name,
@@ -30,7 +32,7 @@ class CreeperFactory implements Factory {
         undefined,
         undefined,
         undefined,
-        geo
+        geofilter
        );
     } else {
       return new Creeper(undefined, name, type, keywords);

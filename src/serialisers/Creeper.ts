@@ -5,6 +5,7 @@ import CreeperType from "../classes/CreeperType";
 import CreeperAction from "../classes/CreeperAction";
 import CreeperActionType from "../classes/CreeperActionType";
 import CreeperKeywords from "../classes/CreeperKeywords";
+import CreeperLocation from "../classes/CreeperLocation";
 import CreeperFrequency from "../classes/CreeperFrequency";
 import CreeperHandlesTweetedAt from "../classes/CreeperHandlesTweetedAt";
 
@@ -23,7 +24,7 @@ class CreeperSerialiser implements Serialiser {
     object["converterId"] = creeper.converterId;
     object["deepProfileOnFind"] = (creeper.deepProfileOnFind === true ? 1 : 0);
     object["deepProfileOnAction"] = (creeper.deepProfileOnAction === true ? 1 : 0);
-    object["geo"] = creeper.geo;
+    object["geo"] = creeper.geofilter.toString();
     return object;
   }
 
@@ -41,20 +42,21 @@ class CreeperSerialiser implements Serialiser {
     }
     const keywords: CreeperKeywords = new CreeperKeywords();
     keywords.fromString(object.keywords);
-    const state: string = object.state;
     const isEnabledByUs: boolean = (object.isEnabledByUs === 1 ? true : false);
     const frequency: CreeperFrequency = new CreeperFrequency(object.actionFrequency);
     const handlesTweetedAt = new CreeperHandlesTweetedAt();
     handlesTweetedAt.fromString(object.handlesTweetedAt);
     const deepProfileOnFind = (object.deepProfileOnFind === 1 ? true : false);
     const deepProfileOnAction = (object.deepProfileOnAction === 1 ? true : false);
+    const geofilter: CreeperLocation = new CreeperLocation();
+    geofilter.fromString(object.geo);
     const creeper = new Creeper(
       object.creeperId,
       object.name,
       type,
       keywords,
       actions,
-      state,
+      object.state,
       isEnabledByUs,
       frequency,
       object.delay,
@@ -62,7 +64,7 @@ class CreeperSerialiser implements Serialiser {
       object.converterId,
       deepProfileOnFind,
       deepProfileOnAction,
-      object.geo
+      geofilter
     );
     if (object.clientId) creeper.setClient({
       "clientId": object.clientId
