@@ -62,6 +62,15 @@ return describe("Objectify", function () {
     }
   };
 
+  const tweetByFewFollowersUser = {
+    "text": "spam spam spam",
+    "user": {
+      "screen_name": "not_author",
+      "location": "",
+      "followers_count": 5
+    }
+  };
+
   const tweetInReplyTo = {
     "text": "@someone_else A tweet containing 'keyword 1'",
     "user": {
@@ -213,6 +222,12 @@ return describe("Objectify", function () {
   it("makes a creeper which replies to a tweet which is not by the author and it hasn't already replied to", function (done2) {
     const creeper = makeCreeper();
     expect(creeper.canTweet(tweetNotByClient, "reply text", "keyword")).to.equal(true);
+    return done2();
+  });
+
+  it("makes a creeper which doesn't reply to a tweet which is by a user with a low number of followers", function (done2) {
+    const creeper = makeCreeper();
+    expect(creeper.canTweet(tweetByFewFollowersUser, "reply text", "spam")).to.equal(false);
     return done2();
   });
 

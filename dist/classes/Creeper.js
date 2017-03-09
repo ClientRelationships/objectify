@@ -63,6 +63,9 @@ var Creeper = (function () {
         // don't annoy people (already tweeted at them)
         if (this.handlesTweetedAt.contains(tweet.user.screen_name))
             return false;
+        // don't tweet at users with tiny number of followers - they are so often bots
+        if (tweet.user.followers_count < 50)
+            return false;
         // don't barge into conversations
         if (tweet.text.indexOf("@") === 0)
             return false;
