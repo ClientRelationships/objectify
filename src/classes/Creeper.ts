@@ -90,29 +90,63 @@ export default class Creeper {
   };
 
   canTweet (tweet: any, currentSeconds: number): boolean {
+    console.log("--------");
+    console.log("updated canTweet decisions...");
+    console.log("--------");
+    console.log(tweet);
+    console.log("--------");
     const tweetText = tweet.text.toLowerCase();
     const elements = tweetText.split(" ");
     // don't annoy people (already tweeted at them)
-    if (this.handlesTweetedAt.contains(tweet.user.screen_name)) return false;
-    // don't tweet at users with tiny number of followers - they are so often bots
-    if (tweet.user.followers_count < 50) return false;
-    // don't barge into conversations
-    if (tweetText.indexOf("@") === 0) return false;
-    // don't screw with retweets (RT syntax)
-    if (tweetText.indexOf("rt ") === 0) return false;
-    // don't screw with retweets (object property)
-    if (tweet.retweeted_status !== undefined) return false;
+    if (this.handlesTweetedAt.contains(tweet.user.screen_name)) {
+      console.log("canTweet decision", "don't annoy people (already tweeted at them)");
+      return false;
+    }
     // don't spam (tweet too often)
-    if (currentSeconds >= this.frequency.value) return false;
+    if (currentSeconds >= this.frequency.value) {
+      console.log("canTweet decision", "don't spam (tweet too often)");
+      return false;
+    }
+    // don't tweet at users with tiny number of followers - they are so often bots
+    if (tweet.user.followers_count < 50) {
+      console.log("canTweet decision", "don't tweet at users with tiny number of followers - they are so often bots");
+      return false;
+    }
+    // don't barge into conversations
+    if (tweetText.indexOf("@") === 0) {
+      console.log("canTweet decision", "don't barge into conversations");
+      return false;
+    }
+    // don't screw with retweets (RT syntax)
+    if (tweetText.indexOf("rt ") === 0) {
+      console.log("canTweet decision", "don't screw with retweets (RT syntax)");
+      return false;
+    }
+    // don't screw with retweets (object property)
+    if (tweet.retweeted_status !== undefined) {
+      console.log("canTweet decision", "don't screw with retweets (RT syntax)");
+      return false;
+    }
     // don't tweet at yourself
-    if (tweet.user.screen_name.toLowerCase() === this.client.twitter.toLowerCase()) return false;
-    // don't tweet if geofilter is specified and user location is specified and they are similar
-    if (this.geofilter.length > 0 && tweet.user.location !== null) {
-      const matchingLocations = this.geofilter.filter(location =>
-        location.toLowerCase() === tweet.user.location.toLowerCase()
-      );
-      if (matchingLocations.length === 0) {
+    if (tweet.user.screen_name.toLowerCase() === this.client.twitter.toLowerCase()) {
+      console.log("canTweet decision", "don't tweet at yourself");
+      return false;
+    }
+    // don't tweet if geofilter is specified and this doesn't work out
+    if (this.geofilter.length > 0) {
+      if (tweet.user.location.toString().length === 0) { // deliberately vague - be liberal in what we accept
+        // user doesn't specify a location, so can't be sure - don't tweet
+        console.log("canTweet decision", "don't tweet if geofilter is specified and this doesn't work out -> user doesn't specify a location, so can't be sure - don't tweet");
         return false;
+      } else {
+        // user specifies a location, check
+        const matchingLocations = this.geofilter.filter(location =>
+          tweet.user.location.toLowerCase().indexOf(location.toLowerCase()) !== -1
+        );
+        if (matchingLocations.length === 0) {
+          console.log("canTweet decision", "don't tweet if geofilter is specified and this doesn't work out -> user specifies a location, check");
+          return false;
+        }
       }
     }
     // don't tweet at an obviously spammy tweet
@@ -120,6 +154,7 @@ export default class Creeper {
     const elementsHashtags = elements.filter(element => element[0] === "#");
     const elementsMentions = elements.filter(element => element[0] === "@");
     if (elements.length === elementsLinks.length + elementsHashtags.length + elementsMentions.length) {
+      console.log("canTweet decision", "don't tweet at an obviously spammy tweet");
       return false;
     }
     // don't reply to a tweet where any keyword is part of another word
@@ -148,11 +183,13 @@ export default class Creeper {
         if (indicesWithASpaceBeforeOrAfter.length === 0) keywordIssue = true;
       }
     });
-    if (keywordIssue === true) {
+    if (keywordIssue) {
+      console.log("canTweet decision", "don't reply to a tweet where any keyword is part of another word");
       return false;
     }
     // don't tweet at foreigners
-    if (tweet.user.lang && tweet.user.lang !== "en") {
+    if (tweet.user.lang !== "en") {
+      console.log("canTweet decision", "don't tweet at foreigners");
       return false;
     }
     // tweet

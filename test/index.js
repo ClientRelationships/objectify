@@ -58,7 +58,8 @@ return describe("Objectify", function () {
     "text": "A tweet containing 'keyword'",
     "user": {
       "screen_name": "not_author",
-      "location": ""
+      "location": "",
+      "lang": "en"
     }
   };
 
@@ -67,7 +68,8 @@ return describe("Objectify", function () {
     "user": {
       "screen_name": "not_author",
       "location": "",
-      "followers_count": 5
+      "followers_count": 5,
+      "lang": "en"
     }
   };
 
@@ -75,7 +77,8 @@ return describe("Objectify", function () {
     "text": "@someone_else A tweet containing 'keyword'",
     "user": {
       "screen_name": "not_author",
-      "location": ""
+      "location": "",
+      "lang": "en"
     }
   };
 
@@ -83,7 +86,8 @@ return describe("Objectify", function () {
     "text": "RT A tweet containing 'keyword'",
     "user": {
       "screen_name": "not_author",
-      "location": ""
+      "location": "",
+      "lang": "en"
     }
   };
 
@@ -92,12 +96,14 @@ return describe("Objectify", function () {
     "retweeted_status": {
       "user": {
         "screen_name": "not_author",
-        "location": ""
+        "location": "",
+        "lang": "en"
       }
     },
     "user": {
       "screen_name": "not_author",
-      "location": ""
+      "location": "",
+      "lang": "en"
     }
   };
 
@@ -105,7 +111,8 @@ return describe("Objectify", function () {
     "text": "I live in London! 'keyword'",
     "user": {
       "screen_name": "not_author",
-      "location": "London"
+      "location": "London",
+      "lang": "en"
     }
   };
 
@@ -113,7 +120,8 @@ return describe("Objectify", function () {
     "text": "I live in Manchester! 'keyword'",
     "user": {
       "screen_name": "not_author",
-      "location": "Manchester"
+      "location": "Manchester",
+      "lang": "en"
     }
   };
 
@@ -121,7 +129,8 @@ return describe("Objectify", function () {
     "text": "https://t.co/blah #love #london @jimbo @bob",
     "user": {
       "screen_name": "not_author",
-      "location": ""
+      "location": "",
+      "lang": "en"
     }
   };
 
@@ -129,20 +138,13 @@ return describe("Objectify", function () {
     "text": "Put jam on my face",
     "user": {
       "screen_name": "not_author",
-      "location": ""
+      "location": "",
+      "lang": "en"
     }
   };
 
   const tweetKeywordInAWord = {
     "text": "I love James!",
-    "user": {
-      "screen_name": "not_author",
-      "location": ""
-    }
-  };
-
-  const tweetEnglish = {
-    "text": "I am from Berlin",
     "user": {
       "screen_name": "not_author",
       "location": "",
@@ -219,19 +221,13 @@ return describe("Objectify", function () {
     return done2();
   });
 
-  it("makes a creeper which replies to a tweet which is not by the author and it hasn't already replied to", function (done2) {
+  it("makes a creeper which replies to a tweet which is not by the client and it hasn't already replied to", function (done2) {
     const creeper = makeCreeper();
     expect(creeper.canTweet(tweetNotByClient, "reply text")).to.equal(true);
     return done2();
   });
 
-  it("makes a creeper which doesn't reply to a tweet which is by a user with a low number of followers", function (done2) {
-    const creeper = makeCreeper();
-    expect(creeper.canTweet(tweetByFewFollowersUser, "reply text")).to.equal(false);
-    return done2();
-  });
-
-  it("makes a creeper which doesn't reply to a tweet which is not by the author and it has already replied to", function (done2) {
+  it("makes a creeper which doesn't reply to a tweet which is not by the client and it has already replied to", function (done2) {
     const creeper = makeCreeper();
     creeper.tweeted(tweetNotByClient);
     expect(creeper.canTweet(tweetNotByClient, "reply text")).to.equal(false);
@@ -243,6 +239,24 @@ return describe("Objectify", function () {
     expect(creeper.canTweet(tweetByClient, "reply text")).to.equal(false);
     return done2();
   });
+
+  it("makes a creeper which doesn't reply to a tweet which is by a user with a low number of followers", function (done2) {
+    const creeper = makeCreeper();
+    expect(creeper.canTweet(tweetByFewFollowersUser, "reply text")).to.equal(false);
+    return done2();
+  });
+
+  // it("makes a London creeper which doesn't reply to a tweet without a location", function (done2) {
+  //   const creeper = makeCreeper(["London"]);
+  //   expect(creeper.canTweet(tweetInManchester, "reply text")).to.equal(false);
+  //   return done2();
+  // });
+
+  // it("makes a London creeper which doesn't reply to a tweet without a location", function (done2) {
+  //   const creeper = makeCreeper(["London"]);
+  //   expect(creeper.canTweet(tweetInManchester, "reply text")).to.equal(false);
+  //   return done2();
+  // });
 
   it("makes a London creeper which replies to a tweet in London", function (done2) {
     const creeper = makeCreeper(["London"]);
@@ -271,12 +285,6 @@ return describe("Objectify", function () {
   it("makes a creeper which doesn't reply to a tweet where the keyword is part of another word", function (done2) {
     const creeper = makeCreeper();
     expect(creeper.canTweet(tweetKeywordInAWord, "reply text")).to.equal(false);
-    return done2();
-  });
-
-  it("makes a creeper which replies to a tweet by an English person", function (done2) {
-    const creeper = makeCreeper();
-    expect(creeper.canTweet(tweetEnglish, "reply text")).to.equal(true);
     return done2();
   });
 
