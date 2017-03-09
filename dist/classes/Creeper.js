@@ -58,8 +58,9 @@ var Creeper = (function () {
         }
     };
     ;
-    Creeper.prototype.canTweet = function (tweet, currentSeconds, keyword) {
-        var elements = tweet.text.split(" ");
+    Creeper.prototype.canTweet = function (tweet, currentSeconds) {
+        var tweetText = tweet.text.toLowerCase();
+        var elements = tweetText.split(" ");
         // don't annoy people (already tweeted at them)
         if (this.handlesTweetedAt.contains(tweet.user.screen_name))
             return false;
@@ -67,10 +68,10 @@ var Creeper = (function () {
         if (tweet.user.followers_count < 50)
             return false;
         // don't barge into conversations
-        if (tweet.text.indexOf("@") === 0)
+        if (tweetText.indexOf("@") === 0)
             return false;
         // don't screw with retweets (RT syntax)
-        if (tweet.text.indexOf("RT ") === 0)
+        if (tweetText.indexOf("rt ") === 0)
             return false;
         // don't screw with retweets (object property)
         if (tweet.retweeted_status !== undefined)
@@ -97,39 +98,41 @@ var Creeper = (function () {
         if (elements.length === elementsLinks.length + elementsHashtags.length + elementsMentions.length) {
             return false;
         }
-        // don't reply to a tweet where the keyword is part of another word
-        // this code is "self documenting"
-        if (tweet.text.length > keyword.length) {
-            var regex = new RegExp(keyword, "gi"), result, indices = [];
-            while ((result = regex.exec(tweet.text))) {
-                indices.push(result.index);
+        // don't reply to a tweet where any keyword is part of another word
+        // this code is "self documenting"...
+        var keywordIssue = false;
+        this.keywords.forEach(function (keyword) {
+            if (tweetText.indexOf(keyword.toLowerCase()) !== -1) {
+                // woohoo, this keyword was mentioned!
+                var regex = new RegExp(keyword, "gi"), result = void 0, indices = [];
+                while ((result = regex.exec(tweetText))) {
+                    indices.push(result.index);
+                }
+                var allowedWrappingCharacters_1 = [" ", "\"", "'", "!", "?", ".", ",", ";", "(", ")", "/"];
+                var indicesWithASpaceBeforeOrAfter = indices.filter(function (index) {
+                    if (index === 0) {
+                        // first: needs a space after it
+                        return (allowedWrappingCharacters_1.indexOf(tweetText[index + keyword.length]) !== -1);
+                    }
+                    else if (index === tweetText.length - keyword.length) {
+                        // last: needs a space before it
+                        return (allowedWrappingCharacters_1.indexOf(tweetText[index - 1]) !== -1);
+                    }
+                    else {
+                        // middle: needs a space before it AND after it
+                        return (allowedWrappingCharacters_1.indexOf(tweetText[index - 1]) !== -1 && allowedWrappingCharacters_1.indexOf(tweetText[index + keyword.length]) !== -1);
+                    }
+                });
+                if (indicesWithASpaceBeforeOrAfter.length === 0)
+                    keywordIssue = true;
             }
-            if (indices.length === 0)
-                return false; // it was never mentioned... stupid twitter
-            var allowedWrappingCharacters_1 = [" ", "\"", "'", "!", ".", ","];
-            var indicesWithASpaceBeforeOrAfter = indices.filter(function (index) {
-                if (index === 0) {
-                    // first: needs a space after it
-                    return (allowedWrappingCharacters_1.indexOf(tweet.text[index + keyword.length]) !== -1);
-                }
-                else if (index === tweet.text.length - keyword.length) {
-                    // last: needs a space before it
-                    return (allowedWrappingCharacters_1.indexOf(tweet.text[index - 1]) !== -1);
-                }
-                else {
-                    // middle: needs a space before it AND after it
-                    return (allowedWrappingCharacters_1.indexOf(tweet.text[index - 1]) !== -1 && allowedWrappingCharacters_1.indexOf(tweet.text[index + keyword.length]) !== -1);
-                }
-            });
-            // console.log('tweet text', tweet.text);
-            // console.log('indices', indices);
-            // console.log('indicesWithASpaceBeforeOrAfter', indicesWithASpaceBeforeOrAfter);
-            if (indicesWithASpaceBeforeOrAfter.length === 0)
-                return false;
-            // don't tweet at foreigners
-            if (tweet.user.lang && tweet.user.lang !== "en") {
-                return false;
-            }
+        });
+        if (keywordIssue === true) {
+            return false;
+        }
+        // don't tweet at foreigners
+        if (tweet.user.lang && tweet.user.lang !== "en") {
+            return false;
         }
         // tweet
         return true;

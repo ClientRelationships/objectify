@@ -47,7 +47,7 @@ return describe("Objectify", function () {
   };
 
   const tweetByClient = {
-    "text": "A tweet containing 'keyword 1'",
+    "text": "A tweet containing 'keyword'",
     "user": {
       "screen_name": "author",
       "location": ""
@@ -55,7 +55,7 @@ return describe("Objectify", function () {
   };
 
   const tweetNotByClient = {
-    "text": "A tweet containing 'keyword 1'",
+    "text": "A tweet containing 'keyword'",
     "user": {
       "screen_name": "not_author",
       "location": ""
@@ -72,7 +72,7 @@ return describe("Objectify", function () {
   };
 
   const tweetInReplyTo = {
-    "text": "@someone_else A tweet containing 'keyword 1'",
+    "text": "@someone_else A tweet containing 'keyword'",
     "user": {
       "screen_name": "not_author",
       "location": ""
@@ -80,7 +80,7 @@ return describe("Objectify", function () {
   };
 
   const tweetRetweet1 = {
-    "text": "RT A tweet containing 'keyword 1'",
+    "text": "RT A tweet containing 'keyword'",
     "user": {
       "screen_name": "not_author",
       "location": ""
@@ -88,7 +88,7 @@ return describe("Objectify", function () {
   };
 
   const tweetRetweet2 = {
-    "text": "RT A tweet containing 'keyword 1'",
+    "text": "RT A tweet containing 'keyword'",
     "retweeted_status": {
       "user": {
         "screen_name": "not_author",
@@ -102,7 +102,7 @@ return describe("Objectify", function () {
   };
 
   const tweetInLondon = {
-    "text": "I live in London! 'keyword 1'",
+    "text": "I live in London! 'keyword'",
     "user": {
       "screen_name": "not_author",
       "location": "London"
@@ -110,7 +110,7 @@ return describe("Objectify", function () {
   };
 
   const tweetInManchester = {
-    "text": "I live in Manchester! 'keyword 1'",
+    "text": "I live in Manchester! 'keyword'",
     "user": {
       "screen_name": "not_author",
       "location": "Manchester"
@@ -160,7 +160,7 @@ return describe("Objectify", function () {
   };
 
   const makeCreeper = function makeCreeper (locations) {
-    const creeper = objectify.factory("Creeper").make("Test Autochirp", "Autochirp", ["keyword 1", "keyword 2", "keyword 3"]);
+    const creeper = objectify.factory("Creeper").make("Test Autochirp", "Autochirp", ["keyword", "berlin", "jam"]);
     creeper.setClient(client);
     creeper.setGeo(locations || []);
     creeper.disable();
@@ -168,7 +168,7 @@ return describe("Objectify", function () {
   };
 
   const makeRawCreeper = function makeRawCreeper (locations) {
-    const creeper = objectify.factory("Creeper").make("Test Autochirp", "Autochirp", ["keyword 1", "keyword 2", "keyword 3"]);
+    const creeper = objectify.factory("Creeper").make("Test Autochirp", "Autochirp", ["keyword", "berlin", "jam"]);
     creeper.setClient(client);
     creeper.setGeo(locations || []);
     creeper.disable();
@@ -208,81 +208,81 @@ return describe("Objectify", function () {
 
   it("makes a creeper which doesn't reply to a tweet which is a reply to someone else", function (done2) {
     const creeper = makeCreeper();
-    expect(creeper.canTweet(tweetInReplyTo, "reply text", "keyword")).to.equal(false);
+    expect(creeper.canTweet(tweetInReplyTo, "reply text")).to.equal(false);
     return done2();
   });
 
   it("makes a creeper which doesn't reply to retweets", function (done2) {
     const creeper = makeCreeper();
-    expect(creeper.canTweet(tweetRetweet1, "reply text", "keyword")).to.equal(false);
-    expect(creeper.canTweet(tweetRetweet2, "reply text", "keyword")).to.equal(false);
+    expect(creeper.canTweet(tweetRetweet1, "reply text")).to.equal(false);
+    expect(creeper.canTweet(tweetRetweet2, "reply text")).to.equal(false);
     return done2();
   });
 
   it("makes a creeper which replies to a tweet which is not by the author and it hasn't already replied to", function (done2) {
     const creeper = makeCreeper();
-    expect(creeper.canTweet(tweetNotByClient, "reply text", "keyword")).to.equal(true);
+    expect(creeper.canTweet(tweetNotByClient, "reply text")).to.equal(true);
     return done2();
   });
 
   it("makes a creeper which doesn't reply to a tweet which is by a user with a low number of followers", function (done2) {
     const creeper = makeCreeper();
-    expect(creeper.canTweet(tweetByFewFollowersUser, "reply text", "spam")).to.equal(false);
+    expect(creeper.canTweet(tweetByFewFollowersUser, "reply text")).to.equal(false);
     return done2();
   });
 
   it("makes a creeper which doesn't reply to a tweet which is not by the author and it has already replied to", function (done2) {
     const creeper = makeCreeper();
     creeper.tweeted(tweetNotByClient);
-    expect(creeper.canTweet(tweetNotByClient, "reply text", "keyword")).to.equal(false);
+    expect(creeper.canTweet(tweetNotByClient, "reply text")).to.equal(false);
     return done2();
   });
 
   it("makes a creeper which doesn't reply to a tweet by the client", function (done2) {
     const creeper = makeCreeper();
-    expect(creeper.canTweet(tweetByClient, "reply text", "keyword")).to.equal(false);
+    expect(creeper.canTweet(tweetByClient, "reply text")).to.equal(false);
     return done2();
   });
 
   it("makes a London creeper which replies to a tweet in London", function (done2) {
     const creeper = makeCreeper(["London"]);
-    expect(creeper.canTweet(tweetInLondon, "reply text", "keyword")).to.equal(true);
+    expect(creeper.canTweet(tweetInLondon, "reply text")).to.equal(true);
     return done2();
   });
 
   it("makes a London creeper which doesn't reply to a tweet in Manchester", function (done2) {
     const creeper = makeCreeper(["London"]);
-    expect(creeper.canTweet(tweetInManchester, "reply text", "keyword")).to.equal(false);
+    expect(creeper.canTweet(tweetInManchester, "reply text")).to.equal(false);
     return done2();
   });
 
   it("makes a creeper which doesn't reply to a spammy tweet", function (done2) {
     const creeper = makeCreeper();
-    expect(creeper.canTweet(tweetSpammy, "reply text", "keyword")).to.equal(false);
+    expect(creeper.canTweet(tweetSpammy, "reply text")).to.equal(false);
     return done2();
   });
 
   it("makes a creeper which replies to a tweet where the keyword is not part of another word", function (done2) {
     const creeper = makeCreeper();
-    expect(creeper.canTweet(tweetKeywordNotInAWord, "reply text", "jam")).to.equal(true);
+    expect(creeper.canTweet(tweetKeywordNotInAWord, "reply text")).to.equal(true);
     return done2();
   });
 
   it("makes a creeper which doesn't reply to a tweet where the keyword is part of another word", function (done2) {
     const creeper = makeCreeper();
-    expect(creeper.canTweet(tweetKeywordInAWord, "reply text", "jam")).to.equal(false);
+    expect(creeper.canTweet(tweetKeywordInAWord, "reply text")).to.equal(false);
     return done2();
   });
 
   it("makes a creeper which replies to a tweet by an English person", function (done2) {
     const creeper = makeCreeper();
-    expect(creeper.canTweet(tweetEnglish, "reply text", "berlin")).to.equal(true);
+    expect(creeper.canTweet(tweetEnglish, "reply text")).to.equal(true);
     return done2();
   });
 
   it("makes a creeper which doesn't reply to a tweet by a foreigner", function (done2) {
     const creeper = makeCreeper();
-    expect(creeper.canTweet(tweetForeigner, "reply text", "berlin")).to.equal(false);
+    expect(creeper.canTweet(tweetForeigner, "reply text")).to.equal(false);
     return done2();
   });
 

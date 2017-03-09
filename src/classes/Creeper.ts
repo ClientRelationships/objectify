@@ -89,16 +89,17 @@ export default class Creeper {
     }
   };
 
-  canTweet (tweet: any, currentSeconds: number, keyword: string): boolean {
-    const elements = tweet.text.split(" ");
+  canTweet (tweet: any, currentSeconds: number): boolean {
+    const tweetText = tweet.text.toLowerCase();
+    const elements = tweetText.split(" ");
     // don't annoy people (already tweeted at them)
     if (this.handlesTweetedAt.contains(tweet.user.screen_name)) return false;
     // don't tweet at users with tiny number of followers - they are so often bots
     if (tweet.user.followers_count < 50) return false;
     // don't barge into conversations
-    if (tweet.text.indexOf("@") === 0) return false;
+    if (tweetText.indexOf("@") === 0) return false;
     // don't screw with retweets (RT syntax)
-    if (tweet.text.indexOf("RT ") === 0) return false;
+    if (tweetText.indexOf("rt ") === 0) return false;
     // don't screw with retweets (object property)
     if (tweet.retweeted_status !== undefined) return false;
     // don't spam (tweet too often)
@@ -121,35 +122,38 @@ export default class Creeper {
     if (elements.length === elementsLinks.length + elementsHashtags.length + elementsMentions.length) {
       return false;
     }
-    // don't reply to a tweet where the keyword is part of another word
-    // this code is "self documenting"
-    if (tweet.text.length > keyword.length) {
-      var regex = new RegExp(keyword, "gi"), result, indices = [];
-      while ((result = regex.exec(tweet.text))) {
-        indices.push(result.index);
-      }
-      if (indices.length === 0) return false; // it was never mentioned... stupid twitter
-      let allowedWrappingCharacters = [" ", "\"", "'", "!", ".", ","];
-      let indicesWithASpaceBeforeOrAfter = indices.filter(index => {
-        if (index === 0) {
-          // first: needs a space after it
-          return (allowedWrappingCharacters.indexOf(tweet.text[index + keyword.length]) !== -1);
-        } else if (index === tweet.text.length - keyword.length) {
-          // last: needs a space before it
-          return (allowedWrappingCharacters.indexOf(tweet.text[index - 1]) !== -1);
-        } else {
-          // middle: needs a space before it AND after it
-          return (allowedWrappingCharacters.indexOf(tweet.text[index - 1]) !== -1 && allowedWrappingCharacters.indexOf(tweet.text[index + keyword.length]) !== -1);
+    // don't reply to a tweet where any keyword is part of another word
+    // this code is "self documenting"...
+    let keywordIssue = false;
+    this.keywords.forEach(keyword => {
+      if (tweetText.indexOf(keyword.toLowerCase()) !== -1) {
+        // woohoo, this keyword was mentioned!
+        let regex = new RegExp(keyword, "gi"), result, indices = [];
+        while ((result = regex.exec(tweetText))) {
+          indices.push(result.index);
         }
-      });
-      // console.log('tweet text', tweet.text);
-      // console.log('indices', indices);
-      // console.log('indicesWithASpaceBeforeOrAfter', indicesWithASpaceBeforeOrAfter);
-      if (indicesWithASpaceBeforeOrAfter.length === 0) return false;
-      // don't tweet at foreigners
-      if (tweet.user.lang && tweet.user.lang !== "en") {
-        return false;
+        let allowedWrappingCharacters = [" ", "\"", "'", "!", "?", ".", ",", ";", "(", ")", "/"];
+        let indicesWithASpaceBeforeOrAfter = indices.filter(index => {
+          if (index === 0) {
+            // first: needs a space after it
+            return (allowedWrappingCharacters.indexOf(tweetText[index + keyword.length]) !== -1);
+          } else if (index === tweetText.length - keyword.length) {
+            // last: needs a space before it
+            return (allowedWrappingCharacters.indexOf(tweetText[index - 1]) !== -1);
+          } else {
+            // middle: needs a space before it AND after it
+            return (allowedWrappingCharacters.indexOf(tweetText[index - 1]) !== -1 && allowedWrappingCharacters.indexOf(tweetText[index + keyword.length]) !== -1);
+          }
+        });
+        if (indicesWithASpaceBeforeOrAfter.length === 0) keywordIssue = true;
       }
+    });
+    if (keywordIssue === true) {
+      return false;
+    }
+    // don't tweet at foreigners
+    if (tweet.user.lang && tweet.user.lang !== "en") {
+      return false;
     }
     // tweet
     return true;
