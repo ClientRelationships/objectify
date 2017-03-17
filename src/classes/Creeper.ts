@@ -149,7 +149,12 @@ export default class Creeper {
         }
       }
     }
-    // don't tweet at an obviously spammy tweet
+    // don't reply to an automated tweet (YouTube)
+    if (tweet.text.indexOf("liked a @YouTube video") !== -1) {
+      console.log("canTweet decision", "don't reply to an automated tweet (YouTube)");
+      return false;
+    }
+    // don't reply to an obviously spammy tweet (if all hashtags etc)
     const elementsLinks = elements.filter(element => element.indexOf("http:") === 0 || element.indexOf("https:") === 0);
     const elementsHashtags = elements.filter(element => element[0] === "#");
     const elementsMentions = elements.filter(element => element[0] === "@");

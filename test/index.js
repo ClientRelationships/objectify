@@ -134,6 +134,15 @@ return describe("Objectify", function () {
     }
   };
 
+  const tweetYouTube = {
+    "text": "I liked a @YouTube video",
+    "user": {
+      "screen_name": "not_author",
+      "location": "",
+      "lang": "en"
+    }
+  };
+
   const tweetKeywordNotInAWord = {
     "text": "Put jam on my face",
     "user": {
@@ -291,6 +300,12 @@ return describe("Objectify", function () {
   it("makes a creeper which doesn't reply to a tweet by a foreigner", function (done2) {
     const creeper = makeCreeper();
     expect(creeper.canTweet(tweetForeigner, "reply text")).to.equal(false);
+    return done2();
+  });
+
+  it("makes a creeper which doesn't reply to an automated tweet from YouTube", function (done2) {
+    const creeper = makeCreeper();
+    expect(creeper.canTweet(tweetYouTube, "reply text")).to.equal(false);
     return done2();
   });
 
