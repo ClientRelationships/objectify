@@ -13,6 +13,7 @@ export default class Converter {
   callToAction: string;
   deepProfileOnSubmit: boolean;
   purpose: ConverterPurpose;
+  autoGoToForwardUrl: boolean;
 
   constructor (
     converterId: number,
@@ -25,6 +26,7 @@ export default class Converter {
     callToAction: string = "Continue",
     deepProfileOnSubmit: boolean = false,
     purpose: ConverterPurpose = new ConverterPurpose(),
+    autoGoToForwardUrl: boolean = false,
     _links: any = {}
   ) {
     this.converterId = converterId;
@@ -37,6 +39,7 @@ export default class Converter {
     this.callToAction = callToAction;
     this.deepProfileOnSubmit = deepProfileOnSubmit;
     this.purpose = purpose;
+    this.autoGoToForwardUrl = autoGoToForwardUrl;
     this._links = _links;
   }
 

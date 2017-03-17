@@ -15,7 +15,8 @@ class ConverterSerialiser implements Serialiser {
       "forwardUrl": converter.forwardUrl,
       "callToAction": converter.callToAction,
       "deepProfileOnSubmit": (converter.deepProfileOnSubmit === true ? 1 : 0),
-      "purpose": converter.purpose.value
+      "purpose": converter.purpose.value,
+      "autoGoToForwardUrl": (converter.autoGoToForwardUrl === true ? 1 : 0)
     };
   }
 
@@ -32,6 +33,7 @@ class ConverterSerialiser implements Serialiser {
       object.callToAction,
       (object.deepProfileOnSubmit === 1 ? true : false),
       new ConverterPurpose(object.purpose),
+      (object.autoGoToForwardUrl === 1 ? true : false),
       object._links
     );
   }

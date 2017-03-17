@@ -371,6 +371,7 @@ return describe("Objectify", function () {
     expect(converter.deepProfileOnSubmit).to.equal(false);
     expect(converter.purpose.toString()).to.equal("Default");
     expect(converter.getFields()).to.be.an("array");
+    expect(converter.autoGoToForwardUrl).to.equal(false);
     return done();
   });
 
@@ -379,6 +380,7 @@ return describe("Objectify", function () {
     expect(rawConverter.name).to.equal("Get Customers");
     expect(rawConverter.deepProfileOnSubmit).to.equal(0);
     expect(rawConverter.purpose).to.equal(1);
+    expect(rawConverter.autoGoToForwardUrl).to.equal(0);
     return done();
   });
 
@@ -389,6 +391,7 @@ return describe("Objectify", function () {
     expect(converter.deepProfileOnSubmit).to.equal(false);
     expect(converter.purpose.toString()).to.equal("Default");
     expect(converter.getFields()).to.be.an("array");
+    expect(converter.autoGoToForwardUrl).to.equal(false);
     return done();
   });
 
