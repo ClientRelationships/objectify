@@ -4,25 +4,13 @@ var DeepProfileSerialiser = (function () {
     function DeepProfileSerialiser() {
     }
     DeepProfileSerialiser.prototype.toRaw = function (deepProfile) {
-        var o = {
-            "status": deepProfile.status,
-            "whenUnprocessed": deepProfile.whenProcessed,
-            "whenProcessed": deepProfile.whenProcessed,
-            "source": deepProfile.source,
-            "converterId": deepProfile.converterId,
-            "creeperId": deepProfile.creeperId,
-            "creeperActionId": deepProfile.creeperActionId
-        };
-        deepProfile.fields.forEach(function (value, key) {
-            o[("field" + key)] = value;
-        });
-        return o;
+        return JSON.parse(JSON.stringify(deepProfile));
     };
     DeepProfileSerialiser.prototype.fromRaw = function (object) {
-        var deepProfile = new DeepProfile_1["default"](object.deepProfileId, object.status, object.whenUnprocessed, object.whenProcessed, object.source, object.converterId, object.creeperId, object.creeperActionId);
-        var fieldKeys = Object.keys(object).filter(function (key) { return key.substring(0, "field".length) === "field"; });
+        var deepProfile = new DeepProfile_1["default"](object.deepProfileId, object.status, object.statisticId, object.whenUnprocessed, object.whenProcessed, object.source, object.converterId, object.creeperId, object.creeperActionId, object.creeperQuality, object.feedbackHash, object.feedbackIsAnonymous, object.feedbackIsSubscribed);
+        var fieldKeys = Object.keys(object).filter(function (key) { return key.indexOf("_") !== -1; });
         fieldKeys.forEach(function (key) {
-            deepProfile.setField(key.substring("field".length), object[key]);
+            deepProfile.setField(key.substring(0, key.indexOf("_")), key.substring(key.indexOf("_") + 1), object[key]);
         });
         return deepProfile;
     };

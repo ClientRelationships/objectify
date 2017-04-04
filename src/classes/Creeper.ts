@@ -90,13 +90,18 @@ export default class Creeper {
   };
 
   canTweet (tweet: any, currentSeconds: number): boolean {
-    console.log("--------");
-    console.log("updated canTweet decisions...");
-    console.log("--------");
+    console.log("----------------");
     console.log(tweet);
-    console.log("--------");
+    console.log("----------------");
     const tweetText = tweet.text.toLowerCase();
     const elements = tweetText.split(" ");
+
+    // don't reply to a tweet which is nothing to do with the keywords at all
+    const keywordsWithinTheTweet = this.keywords.map(keyword => keyword.toLowerCase()).filter(keyword => tweetText.indexOf(keyword) !== -1);
+    if (keywordsWithinTheTweet.length === 0) {
+      console.log("canTweet decision", "don't reply to a tweet which is nothing to do with the keywords at all");
+      return false;
+    }
     // don't annoy people (already tweeted at them)
     if (this.handlesTweetedAt.contains(tweet.user.screen_name)) {
       console.log("canTweet decision", "don't annoy people (already tweeted at them)");
@@ -195,6 +200,11 @@ export default class Creeper {
     // don't tweet at foreigners
     if (tweet.user.lang !== "en") {
       console.log("canTweet decision", "don't tweet at foreigners");
+      return false;
+    }
+    // don't reply to a foreign tweet
+    if (tweet.lang && tweet.lang !== "en") {
+      console.log("canTweet decision", "don't reply to a foreign tweet");
       return false;
     }
     // tweet

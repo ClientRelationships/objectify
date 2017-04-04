@@ -63,25 +63,6 @@ return describe("Objectify", function () {
     }
   };
 
-  const tweetByFewFollowersUser = {
-    "text": "spam spam spam",
-    "user": {
-      "screen_name": "not_author",
-      "location": "",
-      "followers_count": 5,
-      "lang": "en"
-    }
-  };
-
-  const tweetInReplyTo = {
-    "text": "@someone_else A tweet containing 'keyword'",
-    "user": {
-      "screen_name": "not_author",
-      "location": "",
-      "lang": "en"
-    }
-  };
-
   const tweetRetweet1 = {
     "text": "RT A tweet containing 'keyword'",
     "user": {
@@ -104,69 +85,6 @@ return describe("Objectify", function () {
       "screen_name": "not_author",
       "location": "",
       "lang": "en"
-    }
-  };
-
-  const tweetInLondon = {
-    "text": "I live in London! 'keyword'",
-    "user": {
-      "screen_name": "not_author",
-      "location": "London",
-      "lang": "en"
-    }
-  };
-
-  const tweetInManchester = {
-    "text": "I live in Manchester! 'keyword'",
-    "user": {
-      "screen_name": "not_author",
-      "location": "Manchester",
-      "lang": "en"
-    }
-  };
-
-  const tweetSpammy = {
-    "text": "https://t.co/blah #love #london @jimbo @bob",
-    "user": {
-      "screen_name": "not_author",
-      "location": "",
-      "lang": "en"
-    }
-  };
-
-  const tweetYouTube = {
-    "text": "I liked a @YouTube video",
-    "user": {
-      "screen_name": "not_author",
-      "location": "",
-      "lang": "en"
-    }
-  };
-
-  const tweetKeywordNotInAWord = {
-    "text": "Put jam on my face",
-    "user": {
-      "screen_name": "not_author",
-      "location": "",
-      "lang": "en"
-    }
-  };
-
-  const tweetKeywordInAWord = {
-    "text": "I love James!",
-    "user": {
-      "screen_name": "not_author",
-      "location": "",
-      "lang": "en"
-    }
-  };
-
-  const tweetForeigner = {
-    "text": "Ich komme aus Berlin",
-    "user": {
-      "screen_name": "not_author",
-      "location": "",
-      "lang": "de"
     }
   };
 
@@ -219,93 +137,182 @@ return describe("Objectify", function () {
 
   it("makes a creeper which doesn't reply to a tweet which is a reply to someone else", function (done2) {
     const creeper = makeCreeper();
-    expect(creeper.canTweet(tweetInReplyTo, "reply text")).to.equal(false);
+    const tweetInReplyTo = {
+      "text": "@someone_else A tweet containing 'keyword'",
+      "user": {
+        "screen_name": "not_author",
+        "location": "",
+        "lang": "en"
+      }
+    };
+    expect(creeper.canTweet(tweetInReplyTo, 10)).to.equal(false);
     return done2();
   });
 
   it("makes a creeper which doesn't reply to retweets", function (done2) {
     const creeper = makeCreeper();
-    expect(creeper.canTweet(tweetRetweet1, "reply text")).to.equal(false);
-    expect(creeper.canTweet(tweetRetweet2, "reply text")).to.equal(false);
+    expect(creeper.canTweet(tweetRetweet1, 10)).to.equal(false);
+    expect(creeper.canTweet(tweetRetweet2, 10)).to.equal(false);
     return done2();
   });
 
   it("makes a creeper which replies to a tweet which is not by the client and it hasn't already replied to", function (done2) {
     const creeper = makeCreeper();
-    expect(creeper.canTweet(tweetNotByClient, "reply text")).to.equal(true);
+    expect(creeper.canTweet(tweetNotByClient, 10)).to.equal(true);
     return done2();
   });
 
   it("makes a creeper which doesn't reply to a tweet which is not by the client and it has already replied to", function (done2) {
     const creeper = makeCreeper();
     creeper.tweeted(tweetNotByClient);
-    expect(creeper.canTweet(tweetNotByClient, "reply text")).to.equal(false);
+    expect(creeper.canTweet(tweetNotByClient, 10)).to.equal(false);
     return done2();
   });
 
   it("makes a creeper which doesn't reply to a tweet by the client", function (done2) {
     const creeper = makeCreeper();
-    expect(creeper.canTweet(tweetByClient, "reply text")).to.equal(false);
+    expect(creeper.canTweet(tweetByClient, 10)).to.equal(false);
     return done2();
   });
 
   it("makes a creeper which doesn't reply to a tweet which is by a user with a low number of followers", function (done2) {
     const creeper = makeCreeper();
-    expect(creeper.canTweet(tweetByFewFollowersUser, "reply text")).to.equal(false);
+    const tweetByFewFollowersUser = {
+      "text": "spam spam spam",
+      "user": {
+        "screen_name": "not_author",
+        "location": "",
+        "followers_count": 5,
+        "lang": "en"
+      }
+    };
+    expect(creeper.canTweet(tweetByFewFollowersUser, 10)).to.equal(false);
     return done2();
   });
 
-  // it("makes a London creeper which doesn't reply to a tweet without a location", function (done2) {
-  //   const creeper = makeCreeper(["London"]);
-  //   expect(creeper.canTweet(tweetInManchester, "reply text")).to.equal(false);
-  //   return done2();
-  // });
-
-  // it("makes a London creeper which doesn't reply to a tweet without a location", function (done2) {
-  //   const creeper = makeCreeper(["London"]);
-  //   expect(creeper.canTweet(tweetInManchester, "reply text")).to.equal(false);
-  //   return done2();
-  // });
-
   it("makes a London creeper which replies to a tweet in London", function (done2) {
     const creeper = makeCreeper(["London"]);
-    expect(creeper.canTweet(tweetInLondon, "reply text")).to.equal(true);
+    const tweetInLondon = {
+      "text": "I live in London! 'keyword'",
+      "user": {
+        "screen_name": "not_author",
+        "location": "London",
+        "lang": "en"
+      }
+    };
+    expect(creeper.canTweet(tweetInLondon, 10)).to.equal(true);
     return done2();
   });
 
   it("makes a London creeper which doesn't reply to a tweet in Manchester", function (done2) {
     const creeper = makeCreeper(["London"]);
-    expect(creeper.canTweet(tweetInManchester, "reply text")).to.equal(false);
+    const tweetInManchester = {
+      "text": "I live in Manchester! 'keyword'",
+      "user": {
+        "screen_name": "not_author",
+        "location": "Manchester",
+        "lang": "en"
+      }
+    };
+    expect(creeper.canTweet(tweetInManchester, 10)).to.equal(false);
     return done2();
   });
 
   it("makes a creeper which doesn't reply to a spammy tweet", function (done2) {
     const creeper = makeCreeper();
-    expect(creeper.canTweet(tweetSpammy, "reply text")).to.equal(false);
+    const tweetSpammy = {
+      "text": "https://t.co/blah #love #london @jimbo @bob",
+      "user": {
+        "screen_name": "not_author",
+        "location": "",
+        "lang": "en"
+      }
+    };
+    expect(creeper.canTweet(tweetSpammy, 10)).to.equal(false);
+    return done2();
+  });
+
+  it("makes a creeper which doesn't reply to a tweet which is nothing to do with the keywords at all", function (done2) {
+    const creeper = makeCreeper();
+    const tweetKeywordNotInAWord = {
+      "text": "blah blah blah",
+      "user": {
+        "screen_name": "not_author",
+        "location": "",
+        "lang": "en"
+      }
+    };
+    expect(creeper.canTweet(tweetKeywordNotInAWord, 10)).to.equal(false);
     return done2();
   });
 
   it("makes a creeper which replies to a tweet where the keyword is not part of another word", function (done2) {
     const creeper = makeCreeper();
-    expect(creeper.canTweet(tweetKeywordNotInAWord, "reply text")).to.equal(true);
+    const tweetKeywordNotInAWord = {
+      "text": "Put jam on my face",
+      "user": {
+        "screen_name": "not_author",
+        "location": "",
+        "lang": "en"
+      }
+    };
+    expect(creeper.canTweet(tweetKeywordNotInAWord, 10)).to.equal(true);
     return done2();
   });
 
   it("makes a creeper which doesn't reply to a tweet where the keyword is part of another word", function (done2) {
     const creeper = makeCreeper();
-    expect(creeper.canTweet(tweetKeywordInAWord, "reply text")).to.equal(false);
+    const tweetKeywordInAWord = {
+      "text": "I love James!",
+      "user": {
+        "screen_name": "not_author",
+        "location": "",
+        "lang": "en"
+      }
+    };
+    expect(creeper.canTweet(tweetKeywordInAWord, 10)).to.equal(false);
     return done2();
   });
 
   it("makes a creeper which doesn't reply to a tweet by a foreigner", function (done2) {
     const creeper = makeCreeper();
-    expect(creeper.canTweet(tweetForeigner, "reply text")).to.equal(false);
+    const tweetForeigner = {
+      "text": "I am German (but write in English)",
+      "user": {
+        "screen_name": "not_author",
+        "location": "",
+        "lang": "de"
+      }
+    };
+    expect(creeper.canTweet(tweetForeigner, 10)).to.equal(false);
+    return done2();
+  });
+
+  it("makes a creeper which doesn't reply to a foreign tweet", function (done2) {
+    const creeper = makeCreeper();
+    const tweetForeigner = {
+      "text": "Ich komme aus Berlin (und schreibe auf Deutsch)",
+      "lang": "de",
+      "user": {
+        "screen_name": "not_author",
+        "location": ""
+      }
+    };
+    expect(creeper.canTweet(tweetForeigner, 10)).to.equal(false);
     return done2();
   });
 
   it("makes a creeper which doesn't reply to an automated tweet from YouTube", function (done2) {
     const creeper = makeCreeper();
-    expect(creeper.canTweet(tweetYouTube, "reply text")).to.equal(false);
+    const tweetYouTube = {
+      "text": "I liked a @YouTube video",
+      "user": {
+        "screen_name": "not_author",
+        "location": "",
+        "lang": "en"
+      }
+    };
+    expect(creeper.canTweet(tweetYouTube, 10)).to.equal(false);
     return done2();
   });
 
@@ -414,34 +421,35 @@ return describe("Objectify", function () {
   // DEEP PROFILES
   //
 
-  const makeDeepProfile = function makeDeepProfile () {
-    const deepProfile = objectify.factory("DeepProfile").make(undefined);
-    deepProfile.setField("TwitterHandle", "jadaradix");
-    return deepProfile;
-  };
-
   const makeRawDeepProfile = function makeRawDeepProfile () {
     const deepProfile = objectify.factory("DeepProfile").make(undefined);
-    deepProfile.setField("TwitterHandle", "jadaradix");
+    deepProfile.setField("generic", "TwitterHandle", "jadaradix");
+    deepProfile.setField("feedback", "firstName", "James");
+    deepProfile.setField("feedback", "lastName", "Garner");
     const rawDeepProfile = objectify.toRaw("DeepProfile", deepProfile);
     return rawDeepProfile;
   };
 
   it("makes a deep profile", function (done) {
-    const deepProfile = makeDeepProfile();
+    const deepProfile = objectify.factory("DeepProfile").make(undefined);
     return done();
   });
 
   it("serialises a deep profile (toRaw)", function (done) {
     const rawDeepProfile = makeRawDeepProfile();
-    expect(rawDeepProfile.fieldTwitterHandle).to.equal("jadaradix");
+    expect(rawDeepProfile.generic_TwitterHandle).to.equal("jadaradix");
+    expect(rawDeepProfile.feedback_firstName).to.equal("James");
+    expect(rawDeepProfile.feedback_lastName).to.equal("Garner");
     return done();
   });
 
   it("deserialises a deep profile (fromRaw)", function (done) {
     const rawDeepProfile = makeRawDeepProfile();
     const deepProfile = objectify.fromRaw("DeepProfile", rawDeepProfile);
-    expect(deepProfile.getField("TwitterHandle")).to.equal("jadaradix");
+    expect(deepProfile.getField("generic", "TwitterHandle")).to.equal("jadaradix");
+    expect(deepProfile.getField("feedback", "firstName")).to.equal("James");
+    expect(deepProfile.getField("feedback", "lastName")).to.equal("Garner");
+    expect(deepProfile.getName()).to.equal("James Garner");
     return done();
   });
 
