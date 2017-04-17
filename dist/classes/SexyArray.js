@@ -47,6 +47,8 @@ var SexyArray = (function (_super) {
     };
     SexyArray.prototype.fromArray = function (array) {
         var _this = this;
+        if (!Array.isArray(array))
+            return this;
         this.length = 0;
         array.forEach(function (element) {
             _this.push(element);
@@ -54,7 +56,7 @@ var SexyArray = (function (_super) {
         return this;
     };
     SexyArray.prototype.fromString = function (string) {
-        if (string.length === 0)
+        if (string === null || string.length === 0)
             return this.fromArray([]);
         this.fromArray(string.split(", "));
         return this;

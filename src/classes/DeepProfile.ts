@@ -1,3 +1,5 @@
+import CreeperKeywords from "../classes/CreeperKeywords";
+
 export default class DeepProfile {
 
   deepProfileId: number;
@@ -45,10 +47,13 @@ export default class DeepProfile {
   }
 
   setField (region, key, value): void {
+    if (region === "creeper" && key === "keywords") {
+      value = new CreeperKeywords().fromArray(value);
+    }
     this[`${region}_${key}`] = value;
   }
 
-  getField (region, key): string {
+  getField (region, key): any {
     return this[`${region}_${key}`];
   }
 
@@ -68,7 +73,7 @@ export default class DeepProfile {
           return feedbackFirstName;
         }
         if (feedbackFirstName && feedbackLastName) {
-          return `${feedbackFirstName} ${feedbackLastName}`;;
+          return `${feedbackFirstName} ${feedbackLastName}`;
         }
         return "<No Name>";
       },

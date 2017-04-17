@@ -47,6 +47,7 @@ export default class SexyArray extends Array<string> {
   }
 
   fromArray (array: Array<string>): this {
+    if (!Array.isArray(array)) return this;
     this.length = 0;
     array.forEach((element) => {
       this.push(element);
@@ -55,7 +56,7 @@ export default class SexyArray extends Array<string> {
   }
 
   fromString (string: string): this {
-    if (string.length === 0) return this.fromArray([]);
+    if (string === null || string.length === 0) return this.fromArray([]);
     this.fromArray(string.split(", "));
     return this;
   }

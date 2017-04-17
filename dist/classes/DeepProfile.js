@@ -1,4 +1,5 @@
 "use strict";
+var CreeperKeywords_1 = require("../classes/CreeperKeywords");
 var DeepProfile = (function () {
     function DeepProfile(deepProfileId, status, statisticId, whenUnprocessed, whenProcessed, source, converterId, creeperId, creeperActionId, creeperQuality, feedbackHash, feedbackIsAnonymous, feedbackIsSubscribed) {
         if (status === void 0) { status = "dont-process"; }
@@ -28,6 +29,9 @@ var DeepProfile = (function () {
         this.feedbackIsSubscribed = feedbackIsSubscribed;
     }
     DeepProfile.prototype.setField = function (region, key, value) {
+        if (region === "creeper" && key === "keywords") {
+            value = new CreeperKeywords_1["default"]().fromArray(value);
+        }
         this[(region + "_" + key)] = value;
     };
     DeepProfile.prototype.getField = function (region, key) {
@@ -37,19 +41,33 @@ var DeepProfile = (function () {
         return this.source + " (ID " + this.deepProfileId + ")";
     };
     DeepProfile.prototype.getName = function () {
-        var feedbackFirstName = this.getField("feedback", "firstName");
-        var feedbackLastName = this.getField("feedback", "lastName");
-        if (this.feedbackIsAnonymous) {
-            return "? (Anonymous)";
-        }
-        if (feedbackFirstName && !feedbackLastName) {
-            return feedbackFirstName;
-        }
-        if (feedbackFirstName && feedbackLastName) {
-            return feedbackFirstName + " " + feedbackLastName;
-            ;
-        }
-        return "<No Name>";
+        var _this = this;
+        var sources = {
+            "feedback": function () {
+                var feedbackFirstName = _this.getField("feedback", "firstName");
+                var feedbackLastName = _this.getField("feedback", "lastName");
+                console.log(feedbackFirstName, feedbackLastName);
+                if (_this.feedbackIsAnonymous) {
+                    return "? (Anonymous)";
+                }
+                if (feedbackFirstName && !feedbackLastName) {
+                    return feedbackFirstName;
+                }
+                if (feedbackFirstName && feedbackLastName) {
+                    return feedbackFirstName + " " + feedbackLastName;
+                }
+                return "<No Name>";
+            },
+            "convert": function () {
+                var convertFirstName = _this.getField("convert", "name");
+                if (convertFirstName) {
+                    return convertFirstName;
+                }
+                return "<No Name>";
+            }
+        };
+        var source = (sources.hasOwnProperty(this.source) ? this.source : "convert");
+        return sources[source]();
     };
     return DeepProfile;
 }());

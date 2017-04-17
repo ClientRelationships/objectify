@@ -423,9 +423,11 @@ return describe("Objectify", function () {
 
   const makeRawDeepProfile = function makeRawDeepProfile () {
     const deepProfile = objectify.factory("DeepProfile").make(undefined);
+    deepProfile.source = "feedback";
     deepProfile.setField("generic", "TwitterHandle", "jadaradix");
     deepProfile.setField("feedback", "firstName", "James");
     deepProfile.setField("feedback", "lastName", "Garner");
+    deepProfile.setField("creeper", "keywords", ["apple", "pie"]);
     const rawDeepProfile = objectify.toRaw("DeepProfile", deepProfile);
     return rawDeepProfile;
   };
@@ -449,6 +451,9 @@ return describe("Objectify", function () {
     expect(deepProfile.getField("generic", "TwitterHandle")).to.equal("jadaradix");
     expect(deepProfile.getField("feedback", "firstName")).to.equal("James");
     expect(deepProfile.getField("feedback", "lastName")).to.equal("Garner");
+    expect(deepProfile.getField("creeper", "keywords")).to.include("apple");
+    expect(deepProfile.getField("creeper", "keywords")).to.include("pie");
+    expect(deepProfile.getField("creeper", "keywords")).to.not.include("fish");
     expect(deepProfile.getName()).to.equal("James Garner");
     return done();
   });
