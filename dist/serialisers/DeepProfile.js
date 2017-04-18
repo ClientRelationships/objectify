@@ -19,7 +19,7 @@ var DeepProfileSerialiser = (function () {
             var key = fieldKey.substring(fieldKey.indexOf("_") + 1);
             var value = object[fieldKey];
             if (region === "creeper" && key === "keywords") {
-                value = value.toString().split(", ");
+                value = (value || "").toString().split(", ");
             }
             deepProfile.setField(region, key, value);
         });

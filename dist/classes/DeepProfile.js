@@ -46,7 +46,6 @@ var DeepProfile = (function () {
             "feedback": function () {
                 var feedbackFirstName = _this.getField("feedback", "firstName");
                 var feedbackLastName = _this.getField("feedback", "lastName");
-                console.log(feedbackFirstName, feedbackLastName);
                 if (_this.feedbackIsAnonymous) {
                     return "? (Anonymous)";
                 }
